@@ -1,1260 +1,288 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<diagram program="umlet" version="15.1">
-  <zoom_level>9</zoom_level>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2214</x>
-      <y>873</y>
-      <w>333</w>
-      <h>108</h>
-    </coordinates>
-    <panel_attributes>AgentController
---
-- master: MasterAgent
-- agents: List&lt;Agent&gt;
---
-# masterAgent()
-# register(a: Agent): void
-# dispatch(type: AgentType, context: String): AgentResult
-
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2268</x>
-      <y>1053</y>
-      <w>216</w>
-      <h>135</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;Abstract&gt;&gt;
-Agent
---
--tools: List&lt;ToolRegistry&gt;
--context: AgentContext
--llm: llmSource
-- memory: Memory
---
-#run(context: String): AgentResult
-#setLLM(llm: llmSource): void
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2853</x>
-      <y>927</y>
-      <w>189</w>
-      <h>99</h>
-    </coordinates>
-    <panel_attributes>AgentResult
---
-- confidence: float
-- citations: List&lt;String&gt;
-- result: String
---
-
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2367</x>
-      <y>972</y>
-      <w>27</w>
-      <h>99</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2043</x>
-      <y>1287</y>
-      <w>90</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>Announcement 
-Agent</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2160</x>
-      <y>1287</y>
-      <w>90</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>Deadline 
-Agent</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2277</x>
-      <y>1287</y>
-      <w>90</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>Notes 
-Agent</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2394</x>
-      <y>1287</y>
-      <w>90</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>Quiz 
-Agent</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2511</x>
-      <y>1287</y>
-      <w>90</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>Priority
-Agent</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2637</x>
-      <y>1287</y>
-      <w>90</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>Report
-Agent</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2079</x>
-      <y>1179</y>
-      <w>315</w>
-      <h>126</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>330.0;10.0;10.0;120.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2205</x>
-      <y>1179</y>
-      <w>189</w>
-      <h>126</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>190.0;10.0;10.0;120.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2313</x>
-      <y>1179</y>
-      <w>81</w>
-      <h>126</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>70.0;10.0;10.0;120.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2367</x>
-      <y>1179</y>
-      <w>90</w>
-      <h>126</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;80.0;120.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2367</x>
-      <y>1179</y>
-      <w>207</w>
-      <h>126</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;210.0;120.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2367</x>
-      <y>1179</y>
-      <w>333</w>
-      <h>126</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;350.0;120.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1719</x>
-      <y>1305</y>
-      <w>189</w>
-      <h>99</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;Interface&gt;&gt;
+<diagram program="umletino" version="15.1"><zoom_level>8</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>1552</x><y>1632</y><w>168</w><h>88</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
 llmSource
 --
 
 --
-#run(context: String): String
++ run(context: String): String
 
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1494</x>
-      <y>1305</y>
-      <w>126</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>CloudQwenSource</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1494</x>
-      <y>1377</y>
-      <w>135</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>LocalQwenSource</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1611</x>
-      <y>1314</y>
-      <w>126</w>
-      <h>63</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>120.0;50.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1620</x>
-      <y>1350</y>
-      <w>117</w>
-      <h>54</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>110.0;10.0;10.0;40.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2475</x>
-      <y>963</y>
-      <w>396</w>
-      <h>144</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;140.0;420.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2853</x>
-      <y>1062</y>
-      <w>189</w>
-      <h>99</h>
-    </coordinates>
-    <panel_attributes>ToolRegistry
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1552</x><y>1608</y><w>80</w><h>24</h></coordinates><panel_attributes>Strategy</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>704</x><y>760</y><w>208</w><h>200</h></coordinates><panel_attributes>Course
 --
-- tools: List&lt;ITools&gt;
---
-# getTool(name: String): ITools
-# register(tool: Itool): void</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>3177</x>
-      <y>1206</y>
-      <w>189</w>
-      <h>99</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;Interface&gt;&gt;
-ITools
---
-
---
-#execute(): void
-
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>3474</x>
-      <y>1098</y>
-      <w>189</w>
-      <h>90</h>
-    </coordinates>
-    <panel_attributes>PDFParserTool
---
-
---
-#parse(): void
-
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>3357</x>
-      <y>1134</y>
-      <w>135</w>
-      <h>144</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>10.0;140.0;130.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>3474</x>
-      <y>1251</y>
-      <w>189</w>
-      <h>90</h>
-    </coordinates>
-    <panel_attributes>EClassFetcherTool
---
-
---
-#fetch(): void
-
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>3357</x>
-      <y>1251</y>
-      <w>135</w>
-      <h>63</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>10.0;10.0;130.0;50.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>3033</x>
-      <y>1107</y>
-      <w>162</w>
-      <h>171</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;160.0;170.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2475</x>
-      <y>1098</y>
-      <w>396</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;420.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2268</x>
-      <y>1026</y>
-      <w>90</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>Template
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1719</x>
-      <y>1278</y>
-      <w>90</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>Strategy</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2853</x>
-      <y>1197</y>
-      <w>189</w>
-      <h>90</h>
-    </coordinates>
-    <panel_attributes>Memory
---
-
---
-# get()
-# update()</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2475</x>
-      <y>1134</y>
-      <w>396</w>
-      <h>117</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;420.0;110.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>423</x>
-      <y>801</y>
-      <w>189</w>
-      <h>198</h>
-    </coordinates>
-    <panel_attributes>Course
---
--id: String
--name: String
+- id: String
+- name: String
 - gradeReport: GradeReport
-
+- assessments: List&lt;Assessment&gt;
+- materials: List&lt;Materials&gt;
+- reader: Tool
 --
-#getGrade(): float
-#getAnnouncement(): float
-#getProgress(): float
-#getMaterials(): float
-+ addObserver()
-+ removeObserver()
-+ notifyObseever()</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>720</x>
-      <y>1098</y>
-      <w>189</w>
-      <h>144</h>
-    </coordinates>
-    <panel_attributes>Assessment
++ getGrade(): float
++ getMaterials(): List&lt;Materials&gt;
++ uploadFile(filepath: String): void
++ completeAssessment(a: assessments): void
+
++ addObservers(): void
++ removeObservers(): void
++ notify(e: type, filepath: String): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>368</x><y>640</y><w>168</w><h>176</h></coordinates><panel_attributes>Assessment
 --
 - id: String
 - name: String
 - deadline: dateTime
 - weight: Float
 - priorityScore: float
-- type: List&lt;AssessmentType&gt;
+- type: AssessmentType
 - grade: Grade
+- completed: boolean
 --
-# completetd(): Boolean</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>738</x>
-      <y>855</y>
-      <w>135</w>
-      <h>108</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
++ complete(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>384</x><y>896</y><w>120</w><h>96</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
 AssesmentType
 --
 Assignment
 Quiz
 Exam
-Lab</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1008</x>
-      <y>1134</y>
-      <w>189</w>
-      <h>81</h>
-    </coordinates>
-    <panel_attributes>Grade
+Lab</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>64</x><y>680</y><w>232</w><h>72</h></coordinates><panel_attributes>Grade
 --
 - score: float
 --
-# getGrade(): float</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>549</x>
-      <y>990</y>
-      <w>189</w>
-      <h>198</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;190.0;200.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>900</x>
-      <y>1170</y>
-      <w>126</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;120.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>801</x>
-      <y>954</y>
-      <w>27</w>
-      <h>162</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;160.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>252</x>
-      <y>1071</y>
-      <w>189</w>
-      <h>99</h>
-    </coordinates>
-    <panel_attributes>Materials
++ calculateGrade(score: float, weight: float): float
++ getGrade(): float</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>616</x><y>1056</y><w>168</w><h>88</h></coordinates><panel_attributes>Materials
 --
 -id: String
 -filename: String
 -type: MaterialType
 -filepath: String
 --
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>0</x>
-      <y>1071</y>
-      <w>135</w>
-      <h>108</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>432</x><y>1056</y><w>120</w><h>88</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
 MaterialType
 --
 PDF
 Slide
-Link</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>126</x>
-      <y>1116</y>
-      <w>144</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;140.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>342</x>
-      <y>990</y>
-      <w>126</w>
-      <h>99</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>120.0;10.0;10.0;90.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>108</x>
-      <y>828</y>
-      <w>189</w>
-      <h>99</h>
-    </coordinates>
-    <panel_attributes>Announcement
+Link</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>136</x><y>456</y><w>168</w><h>112</h></coordinates><panel_attributes>GradeReport
 --
--id: String
--title: String
--description: MaterialType
+- id: String
+- currentCourseAverage: float
+- courseGoal: float
+- assessments: List&lt;Assessment&gt;
 --
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>288</x>
-      <y>873</y>
-      <w>153</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>150.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1026</x>
-      <y>738</y>
-      <w>189</w>
-      <h>108</h>
-    </coordinates>
-    <panel_attributes>GradeReport
---
--id: String
--currentAverage: float
--goal: float
---
-# computeAverage(): float
-# setGoal(g: float): void</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>603</x>
-      <y>783</y>
-      <w>441</w>
-      <h>99</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>470.0;10.0;10.0;90.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>909</x>
-      <y>630</y>
-      <w>189</w>
-      <h>99</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;Interfaces&gt;&gt;
-ProgressTracker
---
-
---
-+ update()</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1962</x>
-      <y>0</y>
-      <w>189</w>
-      <h>81</h>
-    </coordinates>
-    <panel_attributes>GUI
++ calculateAverage(): float
++ setGoal(g: float): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1632</x><y>272</y><w>168</w><h>72</h></coordinates><panel_attributes>GUI
 --
 - app: AppFacade
 --
 #onButtonAction()
-#render()</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2349</x>
-      <y>0</y>
-      <w>189</w>
-      <h>81</h>
-    </coordinates>
-    <panel_attributes>CLI
+#render()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1960</x><y>272</y><w>168</w><h>72</h></coordinates><panel_attributes>CLI
 --
 - app: AppFacade
 --
-#execute()</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2106</x>
-      <y>324</y>
-      <w>306</w>
-      <h>171</h>
-    </coordinates>
-    <panel_attributes>AppFacade
+#execute()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1744</x><y>560</y><w>272</w><h>232</h></coordinates><panel_attributes>AppFacade
 --
 
 --
-# summarizeAnnouncements(courseId: String): void
-# getDeadlines(courseId: String): void
-# rankDeadlines(couseId: String)
-# answerQuestion(q: String): void
-# generateReport(): void
-# computeGrade(courseId, scores)
-# generatePlan(): void
-# generateQuiz(s: String): void</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2052</x>
-      <y>72</y>
-      <w>144</w>
-      <h>270</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>140.0;280.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2322</x>
-      <y>72</y>
-      <w>144</w>
-      <h>270</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;280.0;140.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>603</x>
-      <y>675</y>
-      <w>324</w>
-      <h>144</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>340.0;10.0;10.0;140.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>918</x>
-      <y>414</y>
-      <w>189</w>
-      <h>81</h>
-    </coordinates>
-    <panel_attributes>ProgressDisplay
---
++ getDeadlines(courseId: String): void
 
---
-+ update()
-+ display()</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>999</x>
-      <y>486</y>
-      <w>27</w>
-      <h>162</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;160.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2106</x>
-      <y>297</y>
-      <w>90</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>Facade</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>909</x>
-      <y>603</y>
-      <w>90</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>Observer</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1935</x>
-      <y>603</y>
-      <w>90</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>Announcement 
-Controller</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2052</x>
-      <y>603</y>
-      <w>90</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>Deadline 
-Controller</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2169</x>
-      <y>603</y>
-      <w>90</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>Notes 
-Controller</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2286</x>
-      <y>603</y>
-      <w>90</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>Quiz 
-Controller</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2403</x>
-      <y>603</y>
-      <w>90</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>Priority
-Controller</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2529</x>
-      <y>603</y>
-      <w>90</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>Report
-Controller</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1800</x>
-      <y>603</y>
-      <w>90</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>Grade 
-Controller</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2331</x>
-      <y>1368</y>
-      <w>90</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>Chat
-Agent</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2367</x>
-      <y>1179</y>
-      <w>27</w>
-      <h>207</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;210.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2655</x>
-      <y>603</y>
-      <w>90</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>Study Plan
-Controller</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1836</x>
-      <y>486</y>
-      <w>441</w>
-      <h>135</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;130.0;470.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1980</x>
-      <y>486</y>
-      <w>297</w>
-      <h>135</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;130.0;310.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2205</x>
-      <y>486</y>
-      <w>72</w>
-      <h>135</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;130.0;60.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2088</x>
-      <y>486</y>
-      <w>189</w>
-      <h>135</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;130.0;190.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2250</x>
-      <y>486</y>
-      <w>99</w>
-      <h>135</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>90.0;130.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2250</x>
-      <y>486</y>
-      <w>216</w>
-      <h>135</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>220.0;130.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2250</x>
-      <y>486</y>
-      <w>342</w>
-      <h>135</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>360.0;130.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2250</x>
-      <y>486</y>
-      <w>468</w>
-      <h>135</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>500.0;130.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1206</x>
-      <y>630</y>
-      <w>612</w>
-      <h>189</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;190.0;660.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1836</x>
-      <y>630</y>
-      <w>432</w>
-      <h>261</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>460.0;270.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1971</x>
-      <y>630</y>
-      <w>315</w>
-      <h>261</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>330.0;270.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2205</x>
-      <y>630</y>
-      <w>153</w>
-      <h>261</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>150.0;270.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2088</x>
-      <y>630</y>
-      <w>234</w>
-      <h>261</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>240.0;270.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2331</x>
-      <y>630</y>
-      <w>45</w>
-      <h>261</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>30.0;270.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2376</x>
-      <y>630</y>
-      <w>90</w>
-      <h>261</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;270.0;80.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2412</x>
-      <y>630</y>
-      <w>180</w>
-      <h>261</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;270.0;180.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>2466</x>
-      <y>630</y>
-      <w>243</w>
-      <h>261</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;270.0;250.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1017</x>
-      <y>1314</y>
-      <w>189</w>
-      <h>99</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;Interface&gt;&gt;
++ rankDeadlines(couseId: String, deadlines: String): void
+
++ answerQuestion(q: String): void
+
++ generateReport(): void
+
++ generatePlan(): void
++ generateQuiz(s: String): void
+
++ computeGrade(courseId, scores): void
++ addAssessmentScore(grade: float): void
+
++ uploadFile(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1712</x><y>336</y><w>152</w><h>240</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>170;280;170;120;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1912</x><y>336</y><w>152</w><h>240</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;280;10;120;170;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1744</x><y>536</y><w>80</w><h>24</h></coordinates><panel_attributes>Facade</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>648</x><y>1784</y><w>168</w><h>88</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
 AIFactory
 --
 
 --
 + createLlmSource()
 + createEmbeddings()
-+ createVectorStore()</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1278</x>
-      <y>1377</y>
-      <w>135</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>OnlineAIFactory</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1278</x>
-      <y>1323</y>
-      <w>135</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>OfflineAIFactory</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1197</x>
-      <y>1332</y>
-      <w>99</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>90.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1197</x>
-      <y>1377</y>
-      <w>99</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>90.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1404</x>
-      <y>1305</y>
-      <w>108</w>
-      <h>45</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>100.0;10.0;10.0;30.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1404</x>
-      <y>1377</y>
-      <w>108</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1017</x>
-      <y>1287</y>
-      <w>90</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>Factory</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1899</x>
-      <y>1098</y>
-      <w>387</w>
-      <h>252</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;260.0;160.0;30.0;410.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1170</x>
-      <y>414</y>
-      <w>189</w>
-      <h>81</h>
-    </coordinates>
-    <panel_attributes>PriorityRanker
++ createVectorStore()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>808</x><y>1728</y><w>120</w><h>96</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;100;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>808</x><y>1848</y><w>120</w><h>64</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;130;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>648</x><y>1760</y><w>80</w><h>24</h></coordinates><panel_attributes>Factory</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1392</x><y>824</y><w>168</w><h>160</h></coordinates><panel_attributes>DeadlineController
+--
+- prompt: String
+- materials: List&lt;Materials&gt;
+- assessmetns: List&lt;assessmetns&gt;
+- agent: Agent
+- llm: llmSource
+--
++ setLLM(llm: llmSource): void
++ getMaterials(): void
++ createAssessments(): Assessment
++ execute(): void
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>288</x><y>712</y><w>96</w><h>24</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;10;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>128</x><y>512</y><w>336</w><h>144</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>400;160;400;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>736</x><y>952</y><w>24</w><h>120</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;130;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>544</x><y>1096</y><w>88</w><h>24</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;10;90;10</additional_attributes></element><element><id>Relation</id><coordinates><x>440</x><y>808</y><w>24</w><h>104</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;110;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>672</x><y>464</y><w>168</w><h>88</h></coordinates><panel_attributes>&lt;&lt;Interfaces&gt;&gt;
+CourseListener
 --
 
 --
-+ update()
-+ display()</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1089</x>
-      <y>486</y>
-      <w>171</w>
-      <h>180</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>170.0;10.0;10.0;180.0</additional_attributes>
-  </element>
-</diagram>
++ update(e: type, filepath: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>672</x><y>440</y><w>80</w><h>24</h></coordinates><panel_attributes>Observer</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1744</x><y>1432</y><w>240</w><h>88</h></coordinates><panel_attributes>Agent
+--
+
+--
++ execute(prompt: String, data: String, llm): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1312</x><y>184</y><w>168</w><h>128</h></coordinates><panel_attributes>PDFReaderTool
+--
+
+--
++ execute(s: String): void
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1176</x><y>376</y><w>168</w><h>152</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt;
+Tool
+--
+
+--
++ execute(s: String): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1040</x><y>184</y><w>168</w><h>128</h></coordinates><panel_attributes>FileReaderTool
+--
+
+--
++ execute(s: String): void
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1288</x><y>304</y><w>96</w><h>88</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;90;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1144</x><y>304</y><w>88</w><h>88</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>90;90;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1472</x><y>688</y><w>288</w><h>152</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;170;10;10;340;10</additional_attributes></element><element><id>Relation</id><coordinates><x>848</x><y>480</y><w>344</w><h>296</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;350;10;190;200;190;200;10;410;10</additional_attributes></element><element><id>Relation</id><coordinates><x>528</x><y>792</y><w>192</w><h>24</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>220;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>904</x><y>840</y><w>504</w><h>24</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>610;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1656</x><y>824</y><w>168</w><h>128</h></coordinates><panel_attributes>TaskController
+--
+- prompt: String
+- deadlines: String
+- agent: Agent
+- llm: llmSource
+--
++ setLLM(llm: llmSource): void+ execute(deadlines: String): void
++ taskCompleted(): void
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1768</x><y>784</y><w>24</w><h>56</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;50;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1128</x><y>1200</y><w>168</w><h>112</h></coordinates><panel_attributes>GradeController
+--
+- report: GradeReport
+--
++ execute(): void
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>0</x><y>560</y><w>1144</w><h>736</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>260;10;260;90;10;90;10;780;1060;780;1060;900;1410;900</additional_attributes></element><element><id>Relation</id><coordinates><x>1200</x><y>720</y><w>560</w><h>496</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;600;10;10;680;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1904</x><y>824</y><w>168</w><h>152</h></coordinates><panel_attributes>LanguageQAController
+--
+- prompt: String
+- question: String
+- agent: Agent
+- materials: List&lt;Materials&gt;
+- llm: llmSource
+- embed: EmbeddingTool
+--
++ setEmbed(e: EmbeddingTool): void
++ setLLM(llm: llmSource): void
++ execute(): void
++ getMaterials(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1928</x><y>784</y><w>24</w><h>56</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;50;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1672</x><y>1032</y><w>168</w><h>144</h></coordinates><panel_attributes>StudyController
+--
+- prompt: String
+- materials: List&lt;Materials&gt;
+- assessmetns: List&lt;assessmetns&gt;
+- agent: Agent
+- llm: llmSource
+--
++ setLLM(llm: llmSource): void
++ execute(): void
++ getAssessments(): void
++ getMaterials(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1744</x><y>784</y><w>136</w><h>264</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;310;10;230;150;230;150;10</additional_attributes></element><element><id>Relation</id><coordinates><x>904</x><y>864</y><w>504</w><h>24</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;10;610;10</additional_attributes></element><element><id>Relation</id><coordinates><x>904</x><y>880</y><w>1096</w><h>136</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;10;540;10;540;150;1350;150;1350;120</additional_attributes></element><element><id>Relation</id><coordinates><x>904</x><y>880</y><w>808</w><h>168</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;30;540;10;540;150;990;150;990;190</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1408</x><y>1032</y><w>168</w><h>136</h></coordinates><panel_attributes>NotesController
+--
+- prompt: String
+- materials: List&lt;Materials&gt;
+- agent: Agent
+- llm: llmSource
+- embed: EmbeddingTool
+--
++ setEmbed(e: EmbeddingTool): void
++ setLLM(llm: llmSource): void
++ execute(): void
++ getMaterials(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>904</x><y>880</y><w>520</w><h>200</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;50;540;10;540;230;630;230</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1912</x><y>1032</y><w>168</w><h>136</h></coordinates><panel_attributes>ReportController
+--
+- prompt: String
+- materials: List&lt;Materials&gt;
+- deadlines: String
+- agent: Agent
+- llm: llmSource
+--
++ setLLM(llm: llmSource): void
++ execute(): void
++ getMaterials(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2144</x><y>1032</y><w>168</w><h>160</h></coordinates><panel_attributes>QuizController
+--
+- prompt: String
+- materials: List&lt;Materials&gt;
+- deadlines: String
+- agent: Agent
+- llm: llmSource
+- embed: EmbeddingTool
+--
++ setEmbed(e: EmbeddingTool): void
++ setLLM(llm: llmSource): void
++ execute(): void
++ getMaterials(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>904</x><y>880</y><w>1344</w><h>168</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;70;540;10;540;150;1590;150;1660;190</additional_attributes></element><element><id>Relation</id><coordinates><x>1472</x><y>976</y><w>320</w><h>472</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>380;570;380;450;190;450;190;40;10;40;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1488</x><y>1160</y><w>272</w><h>328</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>320;390;10;390;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1720</x><y>944</y><w>184</w><h>504</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>210;610;210;80;10;80;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1752</x><y>1168</y><w>96</w><h>280</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>100;330;100;100;10;100;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1976</x><y>968</y><w>152</w><h>528</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;640;170;640;170;60;20;60;20;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1952</x><y>1160</y><w>24</w><h>288</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;340;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1976</x><y>1184</y><w>264</w><h>288</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;340;310;340;310;10</additional_attributes></element><element><id>Relation</id><coordinates><x>744</x><y>544</y><w>24</w><h>232</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;270;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>712</x><y>224</y><w>168</w><h>112</h></coordinates><panel_attributes>MaterialTracker
+--
+
+--
++ update(e: type, filepath: String: void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>456</x><y>224</y><w>168</w><h>112</h></coordinates><panel_attributes>AssessmentTracker
+--
+
+--
++ update(e: type, filepath: String): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>904</x><y>664</y><w>856</w><h>152</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;170;150;170;150;10;1050;10</additional_attributes></element><element><id>Relation</id><coordinates><x>536</x><y>328</y><w>152</w><h>184</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>170;210;10;210;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>784</x><y>328</y><w>24</w><h>152</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;170;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>536</x><y>80</y><w>1152</w><h>1040</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>1420;1280;1330;1280;1330;550;1250;550;1250;10;10;10;10;180</additional_attributes></element><element><id>Relation</id><coordinates><x>880</x><y>0</y><w>1424</w><h>888</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>850;1090;870;1090;870;1000;1760;1000;1760;10;50;10;50;410;10;410</additional_attributes></element><element><id>Relation</id><coordinates><x>872</x><y>0</y><w>1432</w><h>1096</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>880;1350;930;1350;930;1240;1770;1240;1770;10;60;10;60;410;10;410</additional_attributes></element><element><id>Relation</id><coordinates><x>872</x><y>0</y><w>1432</w><h>888</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>1500;1090;1770;1090;1770;10;60;10;60;410;10;410</additional_attributes></element><element><id>Relation</id><coordinates><x>872</x><y>0</y><w>1432</w><h>1048</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>1330;1290;1330;1230;1770;1230;1770;10;60;10;60;410;10;410</additional_attributes></element><element><id>Relation</id><coordinates><x>872</x><y>0</y><w>1432</w><h>1096</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>1210;1350;1240;1350;1240;1240;1770;1240;1770;10;60;10;60;410;10;410</additional_attributes></element><element><id>Relation</id><coordinates><x>872</x><y>0</y><w>1432</w><h>1048</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>1740;1290;1770;1240;1770;10;60;10;60;410;10;410</additional_attributes></element><element><id>Relation</id><coordinates><x>568</x><y>88</y><w>976</w><h>752</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>1200;920;1200;10;10;10;10;170</additional_attributes></element><element><id>UMLClass</id><coordinates><x>912</x><y>1672</y><w>168</w><h>104</h></coordinates><panel_attributes>OnlineFactory
+--
+
+--
++ createLlmSource()
++ createEmbeddings()
++ createVectorStore()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>912</x><y>1832</y><w>168</w><h>104</h></coordinates><panel_attributes>OfflineFactory
+--
+
+--
++ createLlmSource()
++ createEmbeddings()
++ createVectorStore()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1552</x><y>1904</y><w>216</w><h>88</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+VectorStore
+--
+
+--
++ delete(id: String): void
++ query(vector: float[], index: int) List&lt;Chunk&gt;
++ upsert(id: String, vector: float[]): void
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1552</x><y>1768</y><w>168</w><h>88</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+EmbeddingProvider
+--
+
+--
++ embed(text: String)
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1192</x><y>1504</y><w>168</w><h>64</h></coordinates><panel_attributes>CloudQwenSource
+--
+
+--
++ run(context: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1192</x><y>1592</y><w>168</w><h>64</h></coordinates><panel_attributes>CloudEmbedder
+--
+
+--
++ embed(text: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1192</x><y>1680</y><w>216</w><h>88</h></coordinates><panel_attributes>CloudVectorStore
+--
+
+--
++ delete(id: String): void
++ query(vector: float[], index: int) List&lt;Chunk&gt;
++ upsert(id: String, vector: float[]): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1192</x><y>1832</y><w>168</w><h>64</h></coordinates><panel_attributes>LocalQwenSource
+--
+
+--
++ invoke(context: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1192</x><y>1920</y><w>168</w><h>64</h></coordinates><panel_attributes>LocalEmbedder
+--
+
+--
++ embed(text: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1192</x><y>2008</y><w>216</w><h>88</h></coordinates><panel_attributes>ClouocalVectorStore
+--
+
+--
++ delete(id: String): void
++ query(vector: float[], index: int) List&lt;Chunk&gt;
++ upsert(id: String, vector: float[]): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1072</x><y>1536</y><w>136</w><h>176</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>150;10;10;200</additional_attributes></element><element><id>Relation</id><coordinates><x>1072</x><y>1648</y><w>128</w><h>72</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>140;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>1072</x><y>1704</y><w>136</w><h>32</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>150;20;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1072</x><y>1856</y><w>136</w><h>40</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>150;10;10;30</additional_attributes></element><element><id>Relation</id><coordinates><x>1072</x><y>1880</y><w>136</w><h>88</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>150;90;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1072</x><y>1888</y><w>136</w><h>184</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>150;210;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1352</x><y>1544</y><w>208</w><h>144</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;240;160</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1552</x><y>1744</y><w>80</w><h>24</h></coordinates><panel_attributes>Strategy</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1552</x><y>1880</y><w>80</w><h>24</h></coordinates><panel_attributes>Strategy</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1400</x><y>1720</y><w>168</w><h>232</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;190;270</additional_attributes></element><element><id>Relation</id><coordinates><x>1352</x><y>1680</y><w>216</w><h>200</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;230;250;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1360</x><y>1632</y><w>208</w><h>184</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;240;210</additional_attributes></element><element><id>Relation</id><coordinates><x>1352</x><y>1816</y><w>216</w><h>152</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;170;250;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1400</x><y>1944</y><w>168</w><h>120</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;130;190;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1680</x><y>1168</y><w>24</w><h>480</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;580</additional_attributes></element><element><id>Relation</id><coordinates><x>1528</x><y>1160</y><w>160</w><h>488</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;430;180;430;180;590</additional_attributes></element><element><id>Relation</id><coordinates><x>1696</x><y>1160</y><w>272</w><h>488</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>320;10;320;250;10;250;10;590</additional_attributes></element><element><id>Relation</id><coordinates><x>1712</x><y>1184</y><w>504</w><h>464</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>610;10;610;240;10;240;10;560</additional_attributes></element><element><id>Relation</id><coordinates><x>1320</x><y>976</y><w>368</w><h>664</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>170;10;170;50;10;50;10;290;270;290;270;660;440;660;440;810</additional_attributes></element><element><id>Relation</id><coordinates><x>1320</x><y>944</y><w>408</w><h>704</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>490;10;490;90;10;90;10;330;270;330;270;700;440;700;440;860</additional_attributes></element><element><id>Relation</id><coordinates><x>1320</x><y>968</y><w>648</w><h>672</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>790;10;790;60;10;60;10;300;270;300;270;670;440;670;440;820</additional_attributes></element><element><id>Relation</id><coordinates><x>2008</x><y>688</y><w>200</w><h>360</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>230;430;230;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>2008</x><y>688</y><w>200</w><h>360</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>20;430;230;310;230;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1472</x><y>688</y><w>288</w><h>360</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>260;430;10;10;340;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1472</x><y>688</y><w>288</w><h>360</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>90;430;140;350;10;10;340;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1848</x><y>1656</y><w>168</w><h>152</h></coordinates><panel_attributes>EmbeddingTool
+--
+- embedder: EmbeddingProvider
+- vectoreStore: VectoreStore
+--
++ query(vector: float[], index: int) List&lt;Chunk&gt;
++ upsert(id: String, vector: float[]): void
++ embed(text: String)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1712</x><y>1752</y><w>152</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>170;10;10;80</additional_attributes></element><element><id>Relation</id><coordinates><x>1760</x><y>1800</y><w>200</w><h>168</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>230;10;10;190</additional_attributes></element><element><id>Relation</id><coordinates><x>1552</x><y>1160</y><w>336</w><h>512</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>400;620;150;400;10;400;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1976</x><y>1184</y><w>216</w><h>488</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;590;140;470;160;490;250;370;250;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1976</x><y>968</y><w>216</w><h>704</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;860;140;740;160;760;250;640;200;200;90;10</additional_attributes></element></diagram>
