@@ -1,11 +1,11 @@
-<diagram program="umletino" version="15.1"><zoom_level>8</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>1552</x><y>1632</y><w>168</w><h>88</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+<diagram program="umletino" version="15.1"><zoom_level>6</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>1158</x><y>1404</y><w>126</w><h>66</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
 llmSource
 --
 
 --
 + run(context: String): String
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1552</x><y>1608</y><w>80</w><h>24</h></coordinates><panel_attributes>Strategy</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>704</x><y>760</y><w>208</w><h>200</h></coordinates><panel_attributes>Course
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1158</x><y>1386</y><w>60</w><h>18</h></coordinates><panel_attributes>Strategy</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>522</x><y>750</y><w>156</w><h>150</h></coordinates><panel_attributes>Course
 --
 - id: String
 - name: String
@@ -21,7 +21,7 @@ llmSource
 
 + addObservers(): void
 + removeObservers(): void
-+ notify(e: type, filepath: String): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>368</x><y>640</y><w>168</w><h>176</h></coordinates><panel_attributes>Assessment
++ notify(e: type, filepath: String): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>270</x><y>660</y><w>126</w><h>132</h></coordinates><panel_attributes>Assessment
 --
 - id: String
 - name: String
@@ -32,30 +32,30 @@ llmSource
 - grade: Grade
 - completed: boolean
 --
-+ complete(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>384</x><y>896</y><w>120</w><h>96</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
-AssesmentType
++ complete(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>282</x><y>852</y><w>90</w><h>72</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
+AssessmentType
 --
 Assignment
 Quiz
 Exam
-Lab</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>64</x><y>680</y><w>232</w><h>72</h></coordinates><panel_attributes>Grade
+Lab</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>42</x><y>690</y><w>174</w><h>54</h></coordinates><panel_attributes>Grade
 --
 - score: float
 --
 + calculateGrade(score: float, weight: float): float
-+ getGrade(): float</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>616</x><y>1056</y><w>168</w><h>88</h></coordinates><panel_attributes>Materials
++ getGrade(): float</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>456</x><y>972</y><w>126</w><h>66</h></coordinates><panel_attributes>Materials
 --
 -id: String
 -filename: String
 -type: MaterialType
 -filepath: String
 --
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>432</x><y>1056</y><w>120</w><h>88</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>318</x><y>972</y><w>90</w><h>66</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
 MaterialType
 --
 PDF
 Slide
-Link</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>136</x><y>456</y><w>168</w><h>112</h></coordinates><panel_attributes>GradeReport
+Link</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>96</x><y>522</y><w>126</w><h>84</h></coordinates><panel_attributes>GradeReport
 --
 - id: String
 - currentCourseAverage: float
@@ -64,22 +64,22 @@ Link</panel_attributes><additional_attributes></additional_attributes></element>
 --
 + calculateAverage(): float
 + setGoal(g: float): void
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1632</x><y>272</y><w>168</w><h>72</h></coordinates><panel_attributes>GUI
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1218</x><y>384</y><w>126</w><h>54</h></coordinates><panel_attributes>GUI
 --
 - app: AppFacade
 --
 #onButtonAction()
-#render()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1960</x><y>272</y><w>168</w><h>72</h></coordinates><panel_attributes>CLI
+#render()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1464</x><y>384</y><w>126</w><h>54</h></coordinates><panel_attributes>CLI
 --
 - app: AppFacade
 --
-#execute()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1744</x><y>560</y><w>272</w><h>232</h></coordinates><panel_attributes>AppFacade
+#execute()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1302</x><y>600</y><w>204</w><h>174</h></coordinates><panel_attributes>AppFacade
 --
 
 --
 + getDeadlines(courseId: String): void
 
-+ rankDeadlines(couseId: String, deadlines: String): void
++ rankDeadlines(courseId: String, deadlines: String): void
 
 + answerQuestion(q: String): void
 
@@ -91,147 +91,107 @@ Link</panel_attributes><additional_attributes></additional_attributes></element>
 + computeGrade(courseId, scores): void
 + addAssessmentScore(grade: float): void
 
-+ uploadFile(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1712</x><y>336</y><w>152</w><h>240</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>170;280;170;120;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1912</x><y>336</y><w>152</w><h>240</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;280;10;120;170;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1744</x><y>536</y><w>80</w><h>24</h></coordinates><panel_attributes>Facade</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>648</x><y>1784</y><w>168</w><h>88</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
++ uploadFile(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1278</x><y>432</y><w>114</w><h>180</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>170;280;170;120;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1428</x><y>432</y><w>114</w><h>180</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;280;10;120;170;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1302</x><y>582</y><w>60</w><h>18</h></coordinates><panel_attributes>Facade</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>450</x><y>1518</y><w>156</w><h>66</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
 AIFactory
 --
 
 --
-+ createLlmSource()
-+ createEmbeddings()
-+ createVectorStore()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>808</x><y>1728</y><w>120</w><h>96</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;100;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>808</x><y>1848</y><w>120</w><h>64</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;130;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>648</x><y>1760</y><w>80</w><h>24</h></coordinates><panel_attributes>Factory</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1392</x><y>824</y><w>168</w><h>160</h></coordinates><panel_attributes>DeadlineController
++ createLlmSource(): llmSource
++ createEmbeddings(): EmbeddingProvider
++ createVectorStore(): VectorStore</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>600</x><y>1476</y><w>90</w><h>72</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;100;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>600</x><y>1566</y><w>90</w><h>48</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;130;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>450</x><y>1500</y><w>60</w><h>18</h></coordinates><panel_attributes>Factory</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1626</x><y>984</y><w>126</w><h>78</h></coordinates><panel_attributes>DeadlineController
 --
-- prompt: String
-- materials: List&lt;Materials&gt;
-- assessmetns: List&lt;assessmetns&gt;
-- agent: Agent
-- llm: llmSource
+
 --
-+ setLLM(llm: llmSource): void
-+ getMaterials(): void
 + createAssessments(): Assessment
 + execute(): void
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>288</x><y>712</y><w>96</w><h>24</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;10;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>128</x><y>512</y><w>336</w><h>144</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>400;160;400;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>736</x><y>952</y><w>24</w><h>120</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;130;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>544</x><y>1096</y><w>88</w><h>24</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;10;90;10</additional_attributes></element><element><id>Relation</id><coordinates><x>440</x><y>808</y><w>24</w><h>104</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;110;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>672</x><y>464</y><w>168</w><h>88</h></coordinates><panel_attributes>&lt;&lt;Interfaces&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>498</x><y>528</y><w>126</w><h>66</h></coordinates><panel_attributes>&lt;&lt;Interfaces&gt;&gt;
 CourseListener
 --
 
 --
-+ update(e: type, filepath: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>672</x><y>440</y><w>80</w><h>24</h></coordinates><panel_attributes>Observer</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1744</x><y>1432</y><w>240</w><h>88</h></coordinates><panel_attributes>Agent
++ update(e: type, filepath: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>498</x><y>510</y><w>60</w><h>18</h></coordinates><panel_attributes>Observer</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1728</x><y>1314</y><w>246</w><h>66</h></coordinates><panel_attributes>Agent
 --
 
 --
-+ execute(prompt: String, data: String, llm): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1312</x><y>184</y><w>168</w><h>128</h></coordinates><panel_attributes>PDFReaderTool
++ execute(prompt: String, data: String, llm: llmSource): AgentResult</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>978</x><y>318</y><w>126</w><h>96</h></coordinates><panel_attributes>PDFReaderTool
 --
 
 --
 + execute(s: String): void
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1176</x><y>376</y><w>168</w><h>152</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>876</x><y>462</y><w>126</w><h>114</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt;
 Tool
 --
 
 --
 + execute(s: String): void
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1040</x><y>184</y><w>168</w><h>128</h></coordinates><panel_attributes>FileReaderTool
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>774</x><y>318</y><w>126</w><h>96</h></coordinates><panel_attributes>FileReaderTool
 --
 
 --
 + execute(s: String): void
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1288</x><y>304</y><w>96</w><h>88</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;90;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1144</x><y>304</y><w>88</w><h>88</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>90;90;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1472</x><y>688</y><w>288</w><h>152</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;170;10;10;340;10</additional_attributes></element><element><id>Relation</id><coordinates><x>848</x><y>480</y><w>344</w><h>296</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;350;10;190;200;190;200;10;410;10</additional_attributes></element><element><id>Relation</id><coordinates><x>528</x><y>792</y><w>192</w><h>24</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>220;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>904</x><y>840</y><w>504</w><h>24</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>610;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1656</x><y>824</y><w>168</w><h>128</h></coordinates><panel_attributes>TaskController
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>960</x><y>408</y><w>72</w><h>66</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;90;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>852</x><y>408</y><w>66</w><h>66</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>90;90;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1626</x><y>864</y><w>126</w><h>78</h></coordinates><panel_attributes>TaskController
 --
-- prompt: String
-- deadlines: String
-- agent: Agent
-- llm: llmSource
+
 --
-+ setLLM(llm: llmSource): void+ execute(deadlines: String): void
++ execute(deadlines: String): void
 + taskCompleted(): void
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1768</x><y>784</y><w>24</w><h>56</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;50;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1128</x><y>1200</y><w>168</w><h>112</h></coordinates><panel_attributes>GradeController
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>840</x><y>1080</y><w>126</w><h>84</h></coordinates><panel_attributes>GradeController
 --
 - report: GradeReport
 --
 + execute(): void
 
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>0</x><y>560</y><w>1144</w><h>736</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>260;10;260;90;10;90;10;780;1060;780;1060;900;1410;900</additional_attributes></element><element><id>Relation</id><coordinates><x>1200</x><y>720</y><w>560</w><h>496</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;600;10;10;680;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1904</x><y>824</y><w>168</w><h>152</h></coordinates><panel_attributes>LanguageQAController
---
-- prompt: String
-- question: String
-- agent: Agent
-- materials: List&lt;Materials&gt;
-- llm: llmSource
-- embed: EmbeddingTool
---
-+ setEmbed(e: EmbeddingTool): void
-+ setLLM(llm: llmSource): void
-+ execute(): void
-+ getMaterials(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1928</x><y>784</y><w>24</w><h>56</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;50;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1672</x><y>1032</y><w>168</w><h>144</h></coordinates><panel_attributes>StudyController
---
-- prompt: String
-- materials: List&lt;Materials&gt;
-- assessmetns: List&lt;assessmetns&gt;
-- agent: Agent
-- llm: llmSource
---
-+ setLLM(llm: llmSource): void
-+ execute(): void
-+ getAssessments(): void
-+ getMaterials(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1744</x><y>784</y><w>136</w><h>264</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;310;10;230;150;230;150;10</additional_attributes></element><element><id>Relation</id><coordinates><x>904</x><y>864</y><w>504</w><h>24</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;10;610;10</additional_attributes></element><element><id>Relation</id><coordinates><x>904</x><y>880</y><w>1096</w><h>136</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;10;540;10;540;150;1350;150;1350;120</additional_attributes></element><element><id>Relation</id><coordinates><x>904</x><y>880</y><w>808</w><h>168</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;30;540;10;540;150;990;150;990;190</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1408</x><y>1032</y><w>168</w><h>136</h></coordinates><panel_attributes>NotesController
---
-- prompt: String
-- materials: List&lt;Materials&gt;
-- agent: Agent
-- llm: llmSource
-- embed: EmbeddingTool
---
-+ setEmbed(e: EmbeddingTool): void
-+ setLLM(llm: llmSource): void
-+ execute(): void
-+ getMaterials(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>904</x><y>880</y><w>520</w><h>200</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;50;540;10;540;230;630;230</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1912</x><y>1032</y><w>168</w><h>136</h></coordinates><panel_attributes>ReportController
---
-- prompt: String
-- materials: List&lt;Materials&gt;
-- deadlines: String
-- agent: Agent
-- llm: llmSource
---
-+ setLLM(llm: llmSource): void
-+ execute(): void
-+ getMaterials(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2144</x><y>1032</y><w>168</w><h>160</h></coordinates><panel_attributes>QuizController
---
-- prompt: String
-- materials: List&lt;Materials&gt;
-- deadlines: String
-- agent: Agent
-- llm: llmSource
-- embed: EmbeddingTool
---
-+ setEmbed(e: EmbeddingTool): void
-+ setLLM(llm: llmSource): void
-+ execute(): void
-+ getMaterials(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>904</x><y>880</y><w>1344</w><h>168</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;70;540;10;540;150;1590;150;1660;190</additional_attributes></element><element><id>Relation</id><coordinates><x>1472</x><y>976</y><w>320</w><h>472</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>380;570;380;450;190;450;190;40;10;40;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1488</x><y>1160</y><w>272</w><h>328</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>320;390;10;390;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1720</x><y>944</y><w>184</w><h>504</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>210;610;210;80;10;80;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1752</x><y>1168</y><w>96</w><h>280</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>100;330;100;100;10;100;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1976</x><y>968</y><w>152</w><h>528</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;640;170;640;170;60;20;60;20;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1952</x><y>1160</y><w>24</w><h>288</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;340;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1976</x><y>1184</y><w>264</w><h>288</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;340;310;340;310;10</additional_attributes></element><element><id>Relation</id><coordinates><x>744</x><y>544</y><w>24</w><h>232</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;270;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>712</x><y>224</y><w>168</w><h>112</h></coordinates><panel_attributes>MaterialTracker
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1626</x><y>1110</y><w>126</w><h>78</h></coordinates><panel_attributes>LanguageQAController
 --
 
 --
-+ update(e: type, filepath: String: void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>456</x><y>224</y><w>168</w><h>112</h></coordinates><panel_attributes>AssessmentTracker
++ execute(): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1878</x><y>864</y><w>126</w><h>78</h></coordinates><panel_attributes>StudyController
 --
 
 --
-+ update(e: type, filepath: String): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>904</x><y>664</y><w>856</w><h>152</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;170;150;170;150;10;1050;10</additional_attributes></element><element><id>Relation</id><coordinates><x>536</x><y>328</y><w>152</w><h>184</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>170;210;10;210;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>784</x><y>328</y><w>24</w><h>152</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;170;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>536</x><y>80</y><w>1152</w><h>1040</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>1420;1280;1330;1280;1330;550;1250;550;1250;10;10;10;10;180</additional_attributes></element><element><id>Relation</id><coordinates><x>880</x><y>0</y><w>1424</w><h>888</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>850;1090;870;1090;870;1000;1760;1000;1760;10;50;10;50;410;10;410</additional_attributes></element><element><id>Relation</id><coordinates><x>872</x><y>0</y><w>1432</w><h>1096</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>880;1350;930;1350;930;1240;1770;1240;1770;10;60;10;60;410;10;410</additional_attributes></element><element><id>Relation</id><coordinates><x>872</x><y>0</y><w>1432</w><h>888</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>1500;1090;1770;1090;1770;10;60;10;60;410;10;410</additional_attributes></element><element><id>Relation</id><coordinates><x>872</x><y>0</y><w>1432</w><h>1048</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>1330;1290;1330;1230;1770;1230;1770;10;60;10;60;410;10;410</additional_attributes></element><element><id>Relation</id><coordinates><x>872</x><y>0</y><w>1432</w><h>1096</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>1210;1350;1240;1350;1240;1240;1770;1240;1770;10;60;10;60;410;10;410</additional_attributes></element><element><id>Relation</id><coordinates><x>872</x><y>0</y><w>1432</w><h>1048</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>1740;1290;1770;1240;1770;10;60;10;60;410;10;410</additional_attributes></element><element><id>Relation</id><coordinates><x>568</x><y>88</y><w>976</w><h>752</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>1200;920;1200;10;10;10;10;170</additional_attributes></element><element><id>UMLClass</id><coordinates><x>912</x><y>1672</y><w>168</w><h>104</h></coordinates><panel_attributes>OnlineFactory
++ execute(): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2106</x><y>984</y><w>126</w><h>78</h></coordinates><panel_attributes>NotesController
 --
 
 --
-+ createLlmSource()
-+ createEmbeddings()
-+ createVectorStore()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>912</x><y>1832</y><w>168</w><h>104</h></coordinates><panel_attributes>OfflineFactory
++ execute(): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1878</x><y>984</y><w>126</w><h>78</h></coordinates><panel_attributes>ReportController
 --
 
 --
-+ createLlmSource()
-+ createEmbeddings()
-+ createVectorStore()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1552</x><y>1904</y><w>216</w><h>88</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
++ execute(): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1878</x><y>1110</y><w>126</w><h>78</h></coordinates><panel_attributes>QuizController
+--
+
+--
++ execute(): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>552</x><y>588</y><w>18</w><h>174</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;270;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>528</x><y>348</y><w>126</w><h>84</h></coordinates><panel_attributes>MaterialTracker
+--
+
+--
++ update(e: type, filepath: String: void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>336</x><y>348</y><w>126</w><h>84</h></coordinates><panel_attributes>AssessmentTracker
+--
+
+--
++ update(e: type, filepath: String): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>672</x><y>678</y><w>642</w><h>114</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;170;150;170;150;10;1050;10</additional_attributes></element><element><id>Relation</id><coordinates><x>396</x><y>426</y><w>114</w><h>138</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>170;210;10;210;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>582</x><y>426</y><w>18</w><h>114</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;170;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>678</x><y>1434</y><w>126</w><h>78</h></coordinates><panel_attributes>OnlineFactory
+--
+
+--
++ createLlmSource(): llmSource
++ createEmbeddings(): EmbeddingProvider
++ createVectorStore(): VectorStore</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>678</x><y>1554</y><w>126</w><h>78</h></coordinates><panel_attributes>OfflineFactory
+--
+
+--
++ createLlmSource(): llmSource
++ createEmbeddings(): EmbeddingProvider
++ createVectorStore(): VectorStore</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1158</x><y>1608</y><w>162</w><h>66</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
 VectorStore
 --
 
@@ -240,49 +200,77 @@ VectorStore
 + query(vector: float[], index: int) List&lt;Chunk&gt;
 + upsert(id: String, vector: float[]): void
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1552</x><y>1768</y><w>168</w><h>88</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1158</x><y>1506</y><w>126</w><h>66</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
 EmbeddingProvider
 --
 
 --
-+ embed(text: String)
++ embed(text: String): float[]
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1192</x><y>1504</y><w>168</w><h>64</h></coordinates><panel_attributes>CloudQwenSource
---
-
---
-+ run(context: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1192</x><y>1592</y><w>168</w><h>64</h></coordinates><panel_attributes>CloudEmbedder
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>888</x><y>1308</y><w>126</w><h>48</h></coordinates><panel_attributes>CloudQwenSource
 --
 
 --
-+ embed(text: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1192</x><y>1680</y><w>216</w><h>88</h></coordinates><panel_attributes>CloudVectorStore
++ run(context: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>888</x><y>1374</y><w>126</w><h>48</h></coordinates><panel_attributes>CloudEmbedder
 --
 
 --
-+ delete(id: String): void
-+ query(vector: float[], index: int) List&lt;Chunk&gt;
-+ upsert(id: String, vector: float[]): void
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1192</x><y>1832</y><w>168</w><h>64</h></coordinates><panel_attributes>LocalQwenSource
---
-
---
-+ invoke(context: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1192</x><y>1920</y><w>168</w><h>64</h></coordinates><panel_attributes>LocalEmbedder
---
-
---
-+ embed(text: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1192</x><y>2008</y><w>216</w><h>88</h></coordinates><panel_attributes>ClouocalVectorStore
++ embed(text: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>888</x><y>1440</y><w>162</w><h>66</h></coordinates><panel_attributes>CloudVectorStore
 --
 
 --
 + delete(id: String): void
 + query(vector: float[], index: int) List&lt;Chunk&gt;
 + upsert(id: String, vector: float[]): void
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1072</x><y>1536</y><w>136</w><h>176</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>150;10;10;200</additional_attributes></element><element><id>Relation</id><coordinates><x>1072</x><y>1648</y><w>128</w><h>72</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>140;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>1072</x><y>1704</y><w>136</w><h>32</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>150;20;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1072</x><y>1856</y><w>136</w><h>40</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>150;10;10;30</additional_attributes></element><element><id>Relation</id><coordinates><x>1072</x><y>1880</y><w>136</w><h>88</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>150;90;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1072</x><y>1888</y><w>136</w><h>184</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>150;210;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1352</x><y>1544</y><w>208</w><h>144</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;240;160</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1552</x><y>1744</y><w>80</w><h>24</h></coordinates><panel_attributes>Strategy</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1552</x><y>1880</y><w>80</w><h>24</h></coordinates><panel_attributes>Strategy</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1400</x><y>1720</y><w>168</w><h>232</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;190;270</additional_attributes></element><element><id>Relation</id><coordinates><x>1352</x><y>1680</y><w>216</w><h>200</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;230;250;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1360</x><y>1632</y><w>208</w><h>184</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;240;210</additional_attributes></element><element><id>Relation</id><coordinates><x>1352</x><y>1816</y><w>216</w><h>152</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;170;250;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1400</x><y>1944</y><w>168</w><h>120</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;130;190;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1680</x><y>1168</y><w>24</w><h>480</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;580</additional_attributes></element><element><id>Relation</id><coordinates><x>1528</x><y>1160</y><w>160</w><h>488</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;430;180;430;180;590</additional_attributes></element><element><id>Relation</id><coordinates><x>1696</x><y>1160</y><w>272</w><h>488</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>320;10;320;250;10;250;10;590</additional_attributes></element><element><id>Relation</id><coordinates><x>1712</x><y>1184</y><w>504</w><h>464</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>610;10;610;240;10;240;10;560</additional_attributes></element><element><id>Relation</id><coordinates><x>1320</x><y>976</y><w>368</w><h>664</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>170;10;170;50;10;50;10;290;270;290;270;660;440;660;440;810</additional_attributes></element><element><id>Relation</id><coordinates><x>1320</x><y>944</y><w>408</w><h>704</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>490;10;490;90;10;90;10;330;270;330;270;700;440;700;440;860</additional_attributes></element><element><id>Relation</id><coordinates><x>1320</x><y>968</y><w>648</w><h>672</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>790;10;790;60;10;60;10;300;270;300;270;670;440;670;440;820</additional_attributes></element><element><id>Relation</id><coordinates><x>2008</x><y>688</y><w>200</w><h>360</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>230;430;230;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>2008</x><y>688</y><w>200</w><h>360</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>20;430;230;310;230;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1472</x><y>688</y><w>288</w><h>360</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>260;430;10;10;340;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1472</x><y>688</y><w>288</w><h>360</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>90;430;140;350;10;10;340;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1848</x><y>1656</y><w>168</w><h>152</h></coordinates><panel_attributes>EmbeddingTool
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>888</x><y>1554</y><w>126</w><h>48</h></coordinates><panel_attributes>LocalQwenSource
+--
+
+--
++ run(context: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>888</x><y>1620</y><w>126</w><h>48</h></coordinates><panel_attributes>LocalEmbedder
+--
+
+--
++ embed(text: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>888</x><y>1686</y><w>162</w><h>66</h></coordinates><panel_attributes>LocalVectorStore
+--
+
+--
++ delete(id: String): void
++ query(vector: float[], index: int) List&lt;Chunk&gt;
++ upsert(id: String, vector: float[]): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>798</x><y>1332</y><w>102</w><h>132</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>150;10;10;200</additional_attributes></element><element><id>Relation</id><coordinates><x>798</x><y>1416</y><w>96</w><h>54</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>140;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>798</x><y>1458</y><w>102</w><h>24</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>150;20;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>798</x><y>1572</y><w>102</w><h>30</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>150;10;10;30</additional_attributes></element><element><id>Relation</id><coordinates><x>798</x><y>1590</y><w>102</w><h>66</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>150;90;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>798</x><y>1596</y><w>102</w><h>138</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>150;210;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1008</x><y>1338</y><w>156</w><h>108</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;240;160</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1158</x><y>1488</y><w>60</w><h>18</h></coordinates><panel_attributes>Strategy</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1158</x><y>1590</y><w>60</w><h>18</h></coordinates><panel_attributes>Strategy</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1044</x><y>1470</y><w>126</w><h>174</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;190;270</additional_attributes></element><element><id>Relation</id><coordinates><x>1008</x><y>1440</y><w>162</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;230;250;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1014</x><y>1404</y><w>156</w><h>138</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;240;210</additional_attributes></element><element><id>Relation</id><coordinates><x>1008</x><y>1542</y><w>162</w><h>114</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;170;250;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1044</x><y>1638</y><w>126</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;130;190;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1380</x><y>1422</y><w>162</w><h>114</h></coordinates><panel_attributes>EmbeddingTool
 --
 - embedder: EmbeddingProvider
-- vectoreStore: VectoreStore
+- vectorStore: VectoreStore
 --
 + query(vector: float[], index: int) List&lt;Chunk&gt;
 + upsert(id: String, vector: float[]): void
 + embed(text: String)
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1712</x><y>1752</y><w>152</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>170;10;10;80</additional_attributes></element><element><id>Relation</id><coordinates><x>1760</x><y>1800</y><w>200</w><h>168</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>230;10;10;190</additional_attributes></element><element><id>Relation</id><coordinates><x>1552</x><y>1160</y><w>336</w><h>512</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>400;620;150;400;10;400;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1976</x><y>1184</y><w>216</w><h>488</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;590;140;470;160;490;250;370;250;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1976</x><y>968</y><w>216</w><h>704</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;860;140;740;160;760;250;640;200;200;90;10</additional_attributes></element></diagram>
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1278</x><y>1494</y><w>114</w><h>60</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>170;10;10;80</additional_attributes></element><element><id>Relation</id><coordinates><x>1314</x><y>1530</y><w>150</w><h>126</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>230;10;10;190</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1728</x><y>624</y><w>138</w><h>144</h></coordinates><panel_attributes>&lt;&lt;abstract&gt;&gt;
+AITemplate
+--
+- prompt: String
+- materials: List&lt;Materials&gt;
+- assessments: List&lt;assessments&gt;
+- agent: Agent
+- llm: llmSource
+- embed: EmbeddingTool
+--
++ getMaterials(): void
++ getAssessments(): void
++ setEmbed(e: EmbeddingTool): void
++ setLLM(llm: llmSource): void
++ execute(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1728</x><y>606</y><w>60</w><h>18</h></coordinates><panel_attributes>Template</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1500</x><y>672</y><w>240</w><h>18</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>380;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>576</x><y>12</y><w>1254</w><h>624</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>2070;1020;2070;340;900;340;900;10;440;10;440;340;10;340;10;550</additional_attributes></element><element><id>Relation</id><coordinates><x>390</x><y>0</y><w>1470</w><h>636</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>2430;1040;2430;310;1250;310;1250;10;690;10;690;310;10;310;10;580</additional_attributes></element><element><id>Relation</id><coordinates><x>1698</x><y>762</y><w>54</w><h>114</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>70;10;70;110;10;110;10;170</additional_attributes></element><element><id>Relation</id><coordinates><x>1692</x><y>762</y><w>78</w><h>234</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>110;10;110;330;10;330;10;370</additional_attributes></element><element><id>Relation</id><coordinates><x>1686</x><y>762</y><w>102</w><h>360</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>150;10;150;520;10;520;10;580</additional_attributes></element><element><id>Relation</id><coordinates><x>1842</x><y>762</y><w>96</w><h>114</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;110;140;110;140;170</additional_attributes></element><element><id>Relation</id><coordinates><x>1824</x><y>762</y><w>120</w><h>234</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;320;180;320;180;370</additional_attributes></element><element><id>Relation</id><coordinates><x>1806</x><y>762</y><w>126</w><h>360</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;520;190;520;190;580</additional_attributes></element><element><id>Relation</id><coordinates><x>1860</x><y>738</y><w>318</w><h>258</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;280;10;280;300;510;300;510;410</additional_attributes></element><element><id>Relation</id><coordinates><x>1734</x><y>1182</y><w>66</w><h>144</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>90;220;90;100;10;100;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1584</x><y>1056</y><w>198</w><h>270</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>310;430;310;320;10;320;10;60;250;60;250;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1578</x><y>936</y><w>186</w><h>390</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>290;630;290;540;10;540;10;60;250;60;250;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1848</x><y>1182</y><w>60</w><h>144</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;220;10;100;80;100;80;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1866</x><y>1056</y><w>174</w><h>270</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;430;10;320;270;320;270;60;60;60;60;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1884</x><y>936</y><w>162</w><h>390</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;630;10;540;250;540;250;60;30;60;30;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1896</x><y>1014</y><w>222</w><h>312</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;500;10;430;290;430;290;10;350;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1242</x><y>714</y><w>498</w><h>702</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;1150;20;160;610;160;610;10;810;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1422</x><y>738</y><w>318</w><h>696</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;1140;10;150;370;150;370;10;510;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>2100</x><y>1314</y><w>126</w><h>60</h></coordinates><panel_attributes>AgentResult
+--
+- confidence: Float
+- citations: String
+- result: String
+--
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1968</x><y>1338</y><w>144</w><h>18</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>220;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>390</x><y>768</y><w>144</w><h>18</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;220;10</additional_attributes></element><element><id>Relation</id><coordinates><x>552</x><y>894</y><w>18</w><h>90</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;130;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>882</x><y>162</y><w>168</w><h>90</h></coordinates><panel_attributes>Storage
+--
+- root: String
+--
++ read(path: String): byte[]
++ list(folder: String): List&lt;String&gt;
++ exists(path: String): boolean
++ write(path: String, data: byte[]): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>990</x><y>246</y><w>54</w><h>84</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;70;120</additional_attributes></element><element><id>Relation</id><coordinates><x>834</x><y>246</y><w>90</w><h>84</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>130;10;10;120</additional_attributes></element><element><id>Relation</id><coordinates><x>618</x><y>528</y><w>270</w><h>234</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;370;10;270;130;270;130;10;430;10</additional_attributes></element><element><id>Relation</id><coordinates><x>216</x><y>564</y><w>132</w><h>108</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>200;160;200;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>210</x><y>708</y><w>72</w><h>18</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>324</x><y>786</y><w>18</w><h>78</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;110;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>402</x><y>1002</y><w>66</w><h>18</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;90;10</additional_attributes></element><element><id>Relation</id><coordinates><x>0</x><y>600</y><w>852</w><h>540</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>270;10;270;90;10;90;10;880;1400;880</additional_attributes></element><element><id>Relation</id><coordinates><x>900</x><y>708</y><w>414</w><h>384</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;620;10;10;670;10</additional_attributes></element><element><id>Relation</id><coordinates><x>948</x><y>570</y><w>456</w><h>864</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;700;740;700;740;1420</additional_attributes></element></diagram>
