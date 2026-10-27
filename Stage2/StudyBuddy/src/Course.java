@@ -44,5 +44,18 @@ public class Course {
         materials.add(a);
     }
     
+    public void addObservers(CourseListener a) {
+        this.observers.add(a);
+    }
+
+    public void removeObservers(CourseListener a) {
+        this.observers.remove(a);
+    }
+
+    public void notify(String filepath) {
+        for (int i = 0; i < this.observers.size(); i++) {
+            this.observers.remove(i);
+        }
+    }
 
 }
