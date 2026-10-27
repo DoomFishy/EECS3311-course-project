@@ -1,5 +1,5 @@
 
-public class Materials {
+public class Material {
 
     private String id;
     private String filename;
@@ -7,7 +7,7 @@ public class Materials {
     private MaterialType type;
 
 
-    public Materials(String id, String filename, String filepath, MaterialType type) {
+    public Material(String id, String filename, String filepath, MaterialType type) {
         if (id == null || id.isBlank()) throw new IllegalArgumentException("Error - Materials: ID required!");
         if (filename == null || filename.isBlank()) throw new IllegalArgumentException("Error - Materials: Filename required!");
         if (filepath == null || filepath.isBlank()) throw new IllegalArgumentException("Error - Materials: Filepath required!");
