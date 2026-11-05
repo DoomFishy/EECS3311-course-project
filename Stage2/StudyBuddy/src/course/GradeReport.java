@@ -1,16 +1,18 @@
-import java.util.*;
+package course;
+
+import course.assessment.Assessment;
+import java.util.List;
 
 public class GradeReport {
-    
+
     private String id;
     private float gradeGoal;
     private List<Assessment> assessments;
 
-
     public GradeReport(String id, float gradeGoal, List<Assessment> assessments) {
         if (id == null || id.isBlank()) throw new IllegalArgumentException("Error - GradeReport: ID required");
-        if (gradeGoal <= 0) throw new IllegalArgumentException("Error - GradeReport: Grade goal is < 0");
-        if (assessments == null)  throw new IllegalArgumentException("Error - GradeReport: Assessment list is null");
+        if (gradeGoal < 0) throw new IllegalArgumentException("Error - GradeReport: Grade goal is < 0");
+        if (assessments == null) throw new IllegalArgumentException("Error - GradeReport: Assessment list is null");
 
         this.id = id;
         this.gradeGoal = gradeGoal;
@@ -18,6 +20,10 @@ public class GradeReport {
     }
 
     public float calculateAverage() {
+        if (assessments == null || assessments.isEmpty()) {
+            return 0f;
+        }
+
         float total = 0;
         for (int i = 0; i < assessments.size(); i++) {
             total += assessments.get(i).getScore();
@@ -27,9 +33,12 @@ public class GradeReport {
     }
 
     public void setGradeGoal(float gradeGoal) {
-        if (gradeGoal <= 0) throw new IllegalArgumentException("Error - GradeReport_setGradeGoal: Grade goal is < 0");
+        if (gradeGoal < 0) throw new IllegalArgumentException("Error - GradeReport_setGradeGoal: Grade goal is < 0");
 
         this.gradeGoal = gradeGoal;
     }
 
+    public float getCourseGoal() {
+        return gradeGoal;
+    }
 }

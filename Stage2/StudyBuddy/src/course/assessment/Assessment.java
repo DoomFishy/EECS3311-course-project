@@ -1,3 +1,4 @@
+package course.assessment;
 import java.time.LocalDateTime;
 
 public class Assessment {
@@ -29,6 +30,39 @@ public class Assessment {
         this.type = type;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public LocalDateTime getDeadline() {
+        return deadline;
+    }
+
+    public float getWeight() {
+        return weight;
+    }
+
+    public float getPriorityScore() {
+        return priorityScore;
+    }
+
+    public void setPriorityScore(float priorityScore) {
+        if (priorityScore < 0) throw new IllegalArgumentException("Error - Assessment: Priority score cannot be negative");
+        this.priorityScore = priorityScore;
+    }
+
+    public AssessmentType getType() {
+        return type;
+    }
+
+    public double getMaxScore() {
+        return maxScore;
+    }
+
     public double getGrade() {
         return (this.score / this.maxScore) * 100.0;
     }
@@ -43,9 +77,16 @@ public class Assessment {
         return this.score;
     }
 
+    public boolean isCompleted() {
+        return completed;
+    }
+
     public void setCompleted(float score) {
         setScore(score);
         completed = true;
     }
 
+    public void complete() {
+        this.completed = true;
+    }
 }

@@ -1,3 +1,4 @@
+package course.material;
 
 public class Material {
 
@@ -5,7 +6,6 @@ public class Material {
     private String filename;
     private String filepath;
     private MaterialType type;
-
 
     public Material(String id, String filename, String filepath, MaterialType type) {
         if (id == null || id.isBlank()) throw new IllegalArgumentException("Error - Materials: ID required!");
@@ -19,7 +19,19 @@ public class Material {
         this.type = type;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
     public String getFilepath() {
         return filepath;
+    }
+
+    public MaterialType getType() {
+        return type;
     }
 }
