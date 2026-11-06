@@ -58,6 +58,10 @@ public class Course {
 
     public void addAssessment(Assessment a) {
         if (a == null) throw new IllegalArgumentException("Error - Course: Assessment required!");
+        boolean alreadyExists = assessment.stream().anyMatch(existing -> existing.getName().equalsIgnoreCase(a.getName()));
+        if (alreadyExists) {
+            return;
+        }
         assessment.add(a);
         setGradeReport(gradeReport == null ? 0f : gradeReport.getCourseGoal());
         notifyObservers();

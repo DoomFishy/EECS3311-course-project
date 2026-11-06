@@ -1,5 +1,5 @@
 package ai.embedding;
 
 public interface EmbeddingProvider {
-    float [] embed(String text);
+    float[] embed(String text);
 }

@@ -6,6 +6,7 @@ public class Material {
     private String filename;
     private String filepath;
     private MaterialType type;
+    private String content;
 
     public Material(String id, String filename, String filepath, MaterialType type) {
         if (id == null || id.isBlank()) throw new IllegalArgumentException("Error - Materials: ID required!");
@@ -33,5 +34,13 @@ public class Material {
 
     public MaterialType getType() {
         return type;
+    }
+
+    public String getContent() {
+        return content == null ? "" : content;
+    }
+
+    public void setContent(String content) {
+        this.content = content == null ? "" : content;
     }
 }
