@@ -23,6 +23,7 @@ import javax.swing.SwingConstants;
 import ai.controller.AppFacade;
 import ai.factory.AIFactory;
 import course.Course;
+import course.assessment.Assessment;
 
 public class MainMenuGUI extends JFrame {
     private static final List<Course> SHARED_COURSES = new ArrayList<>();
@@ -32,6 +33,7 @@ public class MainMenuGUI extends JFrame {
     private final Map<String, AppFacade> courseFacades;
     private final List<JButton> courseButtons = new ArrayList<>();
     private final JPanel courseListPanel;
+    private final JTextArea overviewText;
     private final Dimension btnSize = new Dimension(420, 80);
 
     public MainMenuGUI(AppFacade appFacade) {
@@ -85,11 +87,11 @@ public class MainMenuGUI extends JFrame {
         rightPanel.setBorder(BorderFactory.createTitledBorder("Overview"));
         add(rightPanel, BorderLayout.CENTER);
 
-        JTextArea overviewText = new JTextArea();
+        overviewText = new JTextArea();
         overviewText.setEditable(false);
         overviewText.setLineWrap(true);
         overviewText.setWrapStyleWord(true);
-        overviewText.setText("Select a course to view its materials, assessments, and AI study tools.");
+        overviewText.setText(buildOverviewText());
         rightPanel.add(new JScrollPane(overviewText), BorderLayout.CENTER);
 
         String modeLabel = "AI Mode: " + (AIFactory.createDefault().getClass().getSimpleName().contains("Online") ? "cloud" : "local");
@@ -109,6 +111,10 @@ public class MainMenuGUI extends JFrame {
             return;
         }
 
+        if (courseFacades.containsKey(course.getId())) {
+            return;
+        }
+
         if (courses.stream().anyMatch(existing -> existing.getId().equals(course.getId()) || existing.getName().equalsIgnoreCase(course.getName()))) {
             return;
         }
@@ -125,8 +131,45 @@ public class MainMenuGUI extends JFrame {
             addCourseButton(course);
         }
 
+        updateOverview();
         courseListPanel.revalidate();
         courseListPanel.repaint();
+    }
+
+    private void updateOverview() {
+        overviewText.setText(buildOverviewText());
+    }
+
+    private String buildOverviewText() {
+        if (courses.isEmpty()) {
+            return "No courses yet. Add a course to start planning your week.";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (Course course : courses) {
+            AppFacade facade = courseFacades.get(course.getId());
+            if (facade == null) {
+                facade = new AppFacade(AIFactory.createDefault(), course);
+                courseFacades.put(course.getId(), facade);
+            }
+
+            List<Assessment> thisWeekTasks = facade.getThisWeekAssessments();
+            sb.append(course.getName()).append("\n");
+            if (thisWeekTasks.isEmpty()) {
+                sb.append("- No tasks due this week.\n");
+            } else {
+                for (Assessment assessment : thisWeekTasks) {
+                    sb.append("- ").append(assessment.getName())
+                        .append(" (")
+                        .append(assessment.getType())
+                        .append(") due ")
+                        .append(assessment.getDeadline().toLocalDate())
+                        .append("\n");
+                }
+            }
+            sb.append("\n");
+        }
+        return sb.toString().trim();
     }
 
     private void onAddCourseClicked() {
@@ -161,6 +204,9 @@ public class MainMenuGUI extends JFrame {
     }
 
     private void addCourseButton(Course course) {
+        JPanel row = new JPanel(new BorderLayout(8, 8));
+        row.setMaximumSize(new Dimension(Short.MAX_VALUE, 60));
+
         JButton btn = new JButton(course.getName());
         btn.setPreferredSize(btnSize);
         btn.setMinimumSize(btnSize);
@@ -168,9 +214,36 @@ public class MainMenuGUI extends JFrame {
         btn.setAlignmentX(Component.CENTER_ALIGNMENT);
         btn.addActionListener(e -> openCourse(course));
 
+        JButton deleteBtn = new JButton("Delete");
+        deleteBtn.setPreferredSize(new Dimension(90, 40));
+        deleteBtn.setFocusPainted(false);
+        deleteBtn.addActionListener(e -> deleteCourse(course));
+
+        row.add(btn, BorderLayout.CENTER);
+        row.add(deleteBtn, BorderLayout.EAST);
+
         courseButtons.add(btn);
-        courseListPanel.add(btn);
+        courseListPanel.add(row);
         courseListPanel.add(Box.createVerticalStrut(8));
+    }
+
+    private void deleteCourse(Course course) {
+        if (course == null) {
+            return;
+        }
+
+        int result = JOptionPane.showConfirmDialog(this,
+                "Delete course \"" + course.getName() + "\"?",
+                "Delete Course",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+        if (result != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        courses.removeIf(existing -> existing.getId().equals(course.getId()));
+        courseFacades.remove(course.getId());
+        refreshCourseButtons();
     }
 
     private void switchAIMode() {

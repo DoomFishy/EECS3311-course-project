@@ -37,6 +37,7 @@ public class CourseDetailGUI extends JFrame {
     
     private final JPanel taskPanel;
     private final JPanel deadlinePanel;
+    private JButton askButton;
 
     public CourseDetailGUI(AppFacade appFacade) {
         super(appFacade.getCourse().getName());
@@ -62,14 +63,22 @@ public class CourseDetailGUI extends JFrame {
         JPanel summaryContainer = new JPanel(new BorderLayout());
         summaryContainer.setBorder(BorderFactory.createTitledBorder("Course Overview"));
         summaryContainer.add(new JScrollPane(summaryArea), BorderLayout.CENTER);
-
+        
         deadlinePanel = new JPanel(new BorderLayout());
         deadlinePanel.setBorder(BorderFactory.createTitledBorder("Deadlines"));
-        deadlinePanel.add(new JScrollPane(new JTextArea(appFacade.generateDeadlineSummary())), BorderLayout.CENTER);
+        JTextArea deadlineArea = new JTextArea(appFacade.generateDeadlineSummary());
+        deadlineArea.setEditable(false);
+        deadlineArea.setLineWrap(true);
+        deadlineArea.setWrapStyleWord(true);
+        deadlinePanel.add(new JScrollPane(deadlineArea), BorderLayout.CENTER);
 
         taskPanel = new JPanel(new BorderLayout());
         taskPanel.setBorder(BorderFactory.createTitledBorder("Tasks"));
-        taskPanel.add(new JScrollPane(new JTextArea(appFacade.generateTaskList())), BorderLayout.CENTER);
+        JTextArea taskArea = new JTextArea(appFacade.generateTaskList());
+        taskArea.setEditable(false);
+        taskArea.setLineWrap(true);
+        taskArea.setWrapStyleWord(true);
+        taskPanel.add(new JScrollPane(taskArea), BorderLayout.CENTER);
 
         // Stack Deadlines and Tasks under the Overview
         JPanel leftBottomPanel = new JPanel(new GridLayout(2, 1, 5, 5));
@@ -93,12 +102,32 @@ public class CourseDetailGUI extends JFrame {
         outputArea.setEditable(false);
         outputArea.setLineWrap(true);
         outputArea.setWrapStyleWord(true);
-        centerPanel.add(new JScrollPane(outputArea), BorderLayout.CENTER);
+        outputArea.setText("Chat history will appear here.\n\n");
+        JScrollPane outputScrollPane = new JScrollPane(outputArea);
+        outputScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        outputScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        centerPanel.add(outputScrollPane, BorderLayout.CENTER);
 
         questionField = new JTextField();
         questionField.setText("Ask AI about this course...");
+        questionField.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (questionField.getText().equals("Ask AI about this course...")) {
+                    questionField.setText("");
+                }
+            }
+            @Override
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (questionField.getText().isBlank()) {
+                    questionField.setText("Ask AI about this course...");
+                }
+            }
+        });
+        questionField.addActionListener(e -> submitQuestion());
         JPanel askPanel = new JPanel(new BorderLayout(8, 8));
-        JButton askButton = new JButton("Ask AI");
+        askButton = new JButton("Ask AI");
+        askButton.addActionListener(e -> submitQuestion());
         askPanel.add(questionField, BorderLayout.CENTER);
         askPanel.add(askButton, BorderLayout.EAST);
         
@@ -197,28 +226,32 @@ public class CourseDetailGUI extends JFrame {
                 outputArea.setText("Please enter a question first.");
                 return;
             }
-            runAsync(() -> appFacade.askQuestion(q), "AI request failed");
+            submitQuestion();
         });
 
         backButton.addActionListener(e -> {
             this.dispose();
-            SwingUtilities.invokeLater(() -> new MainMenuGUI(new AppFacade(ai.factory.AIFactory.createDefault(), appFacade.getCourse())));
+            SwingUtilities.invokeLater(() -> new MainMenuGUI(appFacade));
         });
 
         addAssessmentButton.addActionListener(e -> {
             String name = JOptionPane.showInputDialog(this, "Assessment name:", "Add Assessment", JOptionPane.PLAIN_MESSAGE);
             if (name == null || name.trim().isEmpty()) return;
 
-            String date = JOptionPane.showInputDialog(this, "Due date (yyyy-MM-dd or MM/dd/yyyy):", "Add Assessment", JOptionPane.PLAIN_MESSAGE);
-            if (date == null || date.trim().isEmpty()) return;
+            String month = JOptionPane.showInputDialog(this, "Due month (1-12):", "Add Assessment", JOptionPane.PLAIN_MESSAGE);
+            if (month == null || month.trim().isEmpty()) return;
 
+            String day = JOptionPane.showInputDialog(this, "Due day (1-31):", "Add Assessment", JOptionPane.PLAIN_MESSAGE);
+            if (day == null || day.trim().isEmpty()) return;
+
+            String dueDate = month.trim() + "/" + day.trim() + "/" + java.time.Year.now().getValue();
             String weight = JOptionPane.showInputDialog(this, "Weight percent (e.g. 10):", "Add Assessment", JOptionPane.PLAIN_MESSAGE);
             String type = JOptionPane.showInputDialog(this, "Type (QUIZ, EXAM, ASSIGNMENT, PROJECT):", "Add Assessment", JOptionPane.PLAIN_MESSAGE);
 
             try {
-                appFacade.addManualAssessment(name, date, weight == null ? "25" : weight, type);
+                appFacade.addManualAssessment(name, dueDate, weight == null ? "25" : weight, type);
                 refreshViews();
-                outputArea.setText("Added assessment: " + name + " due " + date);
+                outputArea.setText("Added assessment: " + name + " due " + dueDate);
             } catch (Exception ex) {
                 outputArea.setText("Could not add assessment: " + ex.getMessage());
             }
@@ -294,12 +327,20 @@ public class CourseDetailGUI extends JFrame {
         rebuildMaterialSelection(); // Refresh checkboxes
         
         deadlinePanel.removeAll();
-        deadlinePanel.add(new JScrollPane(new JTextArea(appFacade.generateDeadlineSummary())), BorderLayout.CENTER);
+        JTextArea deadlineArea = new JTextArea(appFacade.generateDeadlineSummary());
+        deadlineArea.setEditable(false);
+        deadlineArea.setLineWrap(true);
+        deadlineArea.setWrapStyleWord(true);
+        deadlinePanel.add(new JScrollPane(deadlineArea), BorderLayout.CENTER);
         deadlinePanel.revalidate();
         deadlinePanel.repaint();
 
         taskPanel.removeAll();
-        taskPanel.add(new JScrollPane(new JTextArea(appFacade.generateTaskList())), BorderLayout.CENTER);
+        JTextArea taskArea = new JTextArea(appFacade.generateTaskList());
+        taskArea.setEditable(false);
+        taskArea.setLineWrap(true);
+        taskArea.setWrapStyleWord(true);
+        taskPanel.add(new JScrollPane(taskArea), BorderLayout.CENTER);
         taskPanel.revalidate();
         taskPanel.repaint();
     }
@@ -368,14 +409,44 @@ public class CourseDetailGUI extends JFrame {
         return sb.toString();
     }
 
+    private void setLoadingState(boolean loading) {
+        if (askButton == null) {
+            return;
+        }
+        askButton.setEnabled(!loading);
+        askButton.setText(loading ? "Generating..." : "Ask AI");
+        questionField.setEnabled(!loading);
+        questionField.setEditable(!loading);
+    }
+
     private void runAsync(CheckedTask task, String fallbackMessage) {
+        setLoadingState(true);
         new Thread(() -> {
             try {
-                outputArea.setText(task.run());
+                String result = task.run();
+                outputArea.setText(result);
+                outputArea.setCaretPosition(outputArea.getDocument().getLength());
             } catch (Exception ex) {
                 outputArea.setText(fallbackMessage + ": " + ex.getMessage());
+            } finally {
+                setLoadingState(false);
             }
         }).start();
+    }
+
+    private void submitQuestion() {
+        String q = questionField.getText();
+        if (q == null || q.isBlank() || q.equals("Ask AI about this course...")) {
+            outputArea.setText("Please enter a question first.");
+            return;
+        }
+        questionField.setText("");
+        runAsync(() -> {
+            String result = appFacade.askQuestion(q);
+            outputArea.append("\nYou: " + q + "\nAI: " + result + "\n");
+            outputArea.setCaretPosition(outputArea.getDocument().getLength());
+            return result;
+        }, "AI request failed");
     }
 
     @FunctionalInterface

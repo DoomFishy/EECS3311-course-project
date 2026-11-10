@@ -5,10 +5,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +33,7 @@ import course.material.MaterialType;
 public class AppFacade {
     private final AIFactory factory;
     private final Course course;
+    private final List<String> conversationHistory = new ArrayList<>();
 
     public AppFacade(AIFactory factory, Course course) {
         this.factory = factory;
@@ -65,6 +68,33 @@ public class AppFacade {
         course.setSelectedMaterialIds(ids);
     }
 
+    public List<Assessment> getUpcomingAssessments() {
+        LocalDate today = LocalDate.now();
+
+        return course.getAssessments().stream()
+                .filter(a -> a.getDeadline() != null)
+                .filter(a -> !a.getDeadline().toLocalDate().isBefore(today))
+                .sorted((a, b) -> a.getDeadline().compareTo(b.getDeadline()))
+                .toList();
+    }
+
+    public List<Assessment> getThisWeekAssessments() {
+        LocalDate today = LocalDate.now();
+        LocalDate startOfWeek = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDate endOfWeek = startOfWeek.plusDays(6);
+
+        return getUpcomingAssessments().stream()
+                .filter(a -> {
+                    LocalDate dueDate = a.getDeadline().toLocalDate();
+                    return (!dueDate.isBefore(startOfWeek)) && (!dueDate.isAfter(endOfWeek));
+                })
+                .toList();
+    }
+
+    public void clearConversationHistory() {
+        conversationHistory.clear();
+    }
+
     public String askQuestion(String question) {
         llmSource llm = factory.createLlmSource();
         Agent agent = new Agent();
@@ -78,6 +108,13 @@ public class AppFacade {
                 .toList();
 
         StringBuilder context = new StringBuilder();
+        if (!conversationHistory.isEmpty()) {
+            context.append("Previous conversation:\n");
+            for (String entry : conversationHistory) {
+                context.append(entry).append("\n");
+            }
+            context.append("\n");
+        }
         if (!materials.isEmpty()) {
             context.append(String.join("\n", materials)).append("\n");
         }
@@ -89,7 +126,10 @@ public class AppFacade {
             context.append("Course: ").append(course.getName()).append("\n");
         }
 
-        return agent.execute(question, context.toString(), llm).getResult();
+        String response = agent.execute(question, context.toString(), llm).getResult();
+        conversationHistory.add("User: " + question);
+        conversationHistory.add("AI: " + response);
+        return response;
     }
 
     public String generateReport() {
@@ -102,18 +142,14 @@ public class AppFacade {
 
     public String generateDeadlineSummary() {
         StringBuilder sb = new StringBuilder();
-        List<Assessment> upcoming = course.getAssessments().stream()
-                .filter(a -> a.getDeadline() != null)
-                .sorted((a, b) -> a.getDeadline().compareTo(b.getDeadline()))
-                .limit(10)
-                .toList();
+        List<Assessment> thisWeek = getAssessments();
 
-        if (upcoming.isEmpty()) {
-            return "No upcoming assessments for this course.";
+        if (thisWeek.isEmpty()) {
+            return "No upcoming assessments for this week.";
         }
 
-        sb.append("Upcoming deadlines this week:\n");
-        for (Assessment assessment : upcoming) {
+        sb.append("This week's deadlines:\n");
+        for (Assessment assessment : thisWeek) {
             sb.append("- ").append(assessment.getName())
               .append(" (")
               .append(assessment.getType())
@@ -130,15 +166,13 @@ public class AppFacade {
     public String generateTaskList() {
         StringBuilder sb = new StringBuilder();
         sb.append("This week's tasks:\n");
-        if (course.getAssessments().isEmpty()) {
-            sb.append("- No assessments scheduled yet.");
+        List<Assessment> thisWeek = getThisWeekAssessments();
+        if (thisWeek.isEmpty()) {
+            sb.append("- No tasks scheduled for this week.");
             return sb.toString();
         }
 
-        for (Assessment assessment : course.getAssessments()) {
-            if (assessment.getDeadline() == null) {
-                continue;
-            }
+        for (Assessment assessment : thisWeek) {
             sb.append("- Finish ")
               .append(assessment.getName())
               .append(" before ")
@@ -406,7 +440,7 @@ public class AppFacade {
 
         LocalDateTime deadline = parseManualDate(dateText);
         if (deadline == null) {
-            throw new IllegalArgumentException("Assessment date could not be parsed. Use yyyy-MM-dd or MM/dd/yyyy.");
+            throw new IllegalArgumentException("Assessment date could not be parsed. Use MM/dd, M/d, MMM d, or yyyy-MM-dd.");
         }
 
         float weight = 0.25f;
@@ -436,17 +470,37 @@ public class AppFacade {
         }
 
         String raw = dateText.trim();
-        for (DateTimeFormatter formatter : Arrays.asList(
+        List<DateTimeFormatter> formatters = Arrays.asList(
                 DateTimeFormatter.ISO_LOCAL_DATE,
                 DateTimeFormatter.ofPattern("MM/dd/yyyy"),
                 DateTimeFormatter.ofPattern("M/d/yyyy"),
                 DateTimeFormatter.ofPattern("yyyy/MM/dd"),
                 DateTimeFormatter.ofPattern("MMM d, yyyy"),
-                DateTimeFormatter.ofPattern("MMMM d, yyyy")
-        )) {
+                DateTimeFormatter.ofPattern("MMMM d, yyyy"),
+                DateTimeFormatter.ofPattern("MM/dd"),
+                DateTimeFormatter.ofPattern("M/d"),
+                DateTimeFormatter.ofPattern("MMM d"),
+                DateTimeFormatter.ofPattern("MMMM d")
+        );
+
+        for (DateTimeFormatter formatter : formatters) {
             try {
                 LocalDate date = LocalDate.parse(raw, formatter);
                 return date.atTime(23, 59);
+            } catch (DateTimeParseException ignored) {
+                // Try the next supported format.
+            }
+        }
+
+        for (DateTimeFormatter formatter : Arrays.asList(
+                DateTimeFormatter.ofPattern("MM/dd"),
+                DateTimeFormatter.ofPattern("M/d"),
+                DateTimeFormatter.ofPattern("MMM d"),
+                DateTimeFormatter.ofPattern("MMMM d"))) {
+            try {
+                LocalDate date = LocalDate.parse(raw, formatter);
+                LocalDate currentYearDate = date.withYear(LocalDate.now().getYear());
+                return currentYearDate.atTime(23, 59);
             } catch (DateTimeParseException ignored) {
                 // Try the next supported format.
             }
