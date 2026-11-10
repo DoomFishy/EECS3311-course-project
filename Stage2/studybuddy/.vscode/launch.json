@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch StudyBuddy",
+            "request": "launch",
+            "mainClass": "App", 
+            "env": {
+                "OPENROUTER_API_KEY": "[API_KEY_HERE]",
+                "OPENROUTER_MODEL": "openrouter/free"
+            }
+        }
+    ]
+}
