@@ -12,7 +12,6 @@ ai\factory\OfflineFactory.class
 course\assessment\Assessment.class
 course\Course.class
 ai\controller\ReportController.class
-ai\template\AIAgentTemplate.class
 course\assessment\AssessmentTracker.class
 ai\controller\LanguageQAController.class
 ai\llm\CloudllmSource.class
