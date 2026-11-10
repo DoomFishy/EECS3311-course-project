@@ -1,14 +1,22 @@
 package ai.factory;
 
-import ai.embedding.*;
-import ai.llm.*;
-import ai.vector.*;
+import ai.embedding.EmbeddingProvider;
+import ai.llm.llmSource;
+import ai.vector.VectorStore;
 
 public interface AIFactory {
     
     llmSource createLlmSource();
     EmbeddingProvider createEmbeddings();
     VectorStore createVectorStore();
+
+    static void setMode(String mode) {
+        if (mode == null || mode.isBlank()) {
+            System.clearProperty("studybuddy.ai.mode");
+            return;
+        }
+        System.setProperty("studybuddy.ai.mode", mode.trim().toLowerCase(java.util.Locale.ROOT));
+    }
 
     static AIFactory createDefault() {
         String mode = System.getProperty("studybuddy.ai.mode", System.getenv().getOrDefault("STUDYBUDDY_AI_MODE", "auto"));

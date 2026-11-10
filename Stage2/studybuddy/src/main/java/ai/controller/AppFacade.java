@@ -1,5 +1,19 @@
 package ai.controller;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+
 import ai.agent.Agent;
 import ai.agent.EmbeddingTool;
 import ai.factory.AIFactory;
@@ -13,20 +27,6 @@ import course.assessment.Assessment;
 import course.assessment.AssessmentType;
 import course.material.Material;
 import course.material.MaterialType;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-
 
 public class AppFacade {
     private final AIFactory factory;
@@ -49,10 +49,27 @@ public class AppFacade {
         return course.getMaterials();
     }
 
+    public List<Material> getSelectedMaterials() {
+        return course.getSelectedMaterials();
+    }
+
+    public void setSelectedMaterials(List<Material> selectedMaterials) {
+        List<String> ids = new ArrayList<>();
+        if (selectedMaterials != null) {
+            for (Material material : selectedMaterials) {
+                if (material != null) {
+                    ids.add(material.getId());
+                }
+            }
+        }
+        course.setSelectedMaterialIds(ids);
+    }
+
     public String askQuestion(String question) {
         llmSource llm = factory.createLlmSource();
         Agent agent = new Agent();
-        List<String> materials = course.getMaterials().stream()
+
+        List<String> materials = getSelectedMaterials().stream()
                 .map(Material::getContent)
                 .filter(content -> content != null && !content.isBlank())
                 .toList();
@@ -68,12 +85,67 @@ public class AppFacade {
             context.append(String.join("\n", assessments));
         }
 
+        if (context.isEmpty()) {
+            context.append("Course: ").append(course.getName()).append("\n");
+        }
+
         return agent.execute(question, context.toString(), llm).getResult();
     }
 
     public String generateReport() {
         llmSource llm = factory.createLlmSource();
-        return llm.run("Generate a report for course: " + course.getName());
+        String prompt = buildCourseContextPrompt(
+                "Generate a brief progress report for this course. Include new materials uploaded since last time, upcoming work this week, and any grade risks."
+        );
+        return llm.run(prompt);
+    }
+
+    public String generateDeadlineSummary() {
+        StringBuilder sb = new StringBuilder();
+        List<Assessment> upcoming = course.getAssessments().stream()
+                .filter(a -> a.getDeadline() != null)
+                .sorted((a, b) -> a.getDeadline().compareTo(b.getDeadline()))
+                .limit(10)
+                .toList();
+
+        if (upcoming.isEmpty()) {
+            return "No upcoming assessments for this course.";
+        }
+
+        sb.append("Upcoming deadlines this week:\n");
+        for (Assessment assessment : upcoming) {
+            sb.append("- ").append(assessment.getName())
+              .append(" (")
+              .append(assessment.getType())
+              .append(")")
+              .append(" due ")
+              .append(assessment.getDeadline().toLocalDate())
+              .append(" | weight ")
+              .append(assessment.getWeight())
+              .append("\n");
+        }
+        return sb.toString();
+    }
+
+    public String generateTaskList() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("This week's tasks:\n");
+        if (course.getAssessments().isEmpty()) {
+            sb.append("- No assessments scheduled yet.");
+            return sb.toString();
+        }
+
+        for (Assessment assessment : course.getAssessments()) {
+            if (assessment.getDeadline() == null) {
+                continue;
+            }
+            sb.append("- Finish ")
+              .append(assessment.getName())
+              .append(" before ")
+              .append(assessment.getDeadline().toLocalDate())
+              .append("\n");
+        }
+        return sb.toString();
     }
 
     public void uploadFile(String filepath) {
@@ -131,6 +203,66 @@ public class AppFacade {
         return sb.toString();
     }
 
+    public void setGradeGoal(float goal) {
+        if (goal < 0) {
+            throw new IllegalArgumentException("Grade goal cannot be negative.");
+        }
+        course.setGradeReport(goal);
+    }
+
+    public float getGradeGoal() {
+        return course.getGradeReport() == null ? 0f : course.getGradeReport().getCourseGoal();
+    }
+
+    public String getCurrentGradeSummary() {
+        double average = course.getAssessments().stream().mapToDouble(Assessment::getGrade).average().orElse(0.0);
+        return String.format(Locale.US, "Current average: %.2f%% | Grade goal: %.2f%%", average, getGradeGoal());
+    }
+
+    public void setAIMode(String mode) {
+        AIFactory.setMode(mode);
+    }
+
+    public String getAIMode() {
+        String mode = System.getProperty("studybuddy.ai.mode", System.getenv().getOrDefault("STUDYBUDDY_AI_MODE", "auto"));
+        return mode == null ? "auto" : mode;
+    }
+
+    private String buildCourseContextPrompt(String instruction) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(instruction).append("\n\n");
+        sb.append("Course: ").append(course.getName()).append("\n");
+        sb.append("Course grade goal: ").append(getGradeGoal()).append("%\n");
+
+        if (!getSelectedMaterials().isEmpty()) {
+            sb.append("Selected materials:\n");
+            for (Material material : getSelectedMaterials()) {
+                if (material.getContent() != null && !material.getContent().isBlank()) {
+                    sb.append("--- ").append(material.getFilename()).append(" ---\n");
+                    String text = material.getContent();
+                    if (text.length() > 3000) {
+                        text = text.substring(0, 3000) + "\n...[truncated]\n";
+                    }
+                    sb.append(text).append("\n");
+                }
+            }
+        }
+
+        if (!course.getAssessments().isEmpty()) {
+            sb.append("Assessments:\n");
+            for (Assessment assessment : course.getAssessments()) {
+                sb.append("- ").append(assessment.getName())
+                        .append(" | type: ").append(assessment.getType())
+                        .append(" | due: ").append(assessment.getDeadline().toLocalDate())
+                        .append(" | weight: ").append(assessment.getWeight())
+                        .append(" | score: ").append(assessment.getScore())
+                        .append("\n");
+            }
+        }
+
+        return sb.toString();
+    }
+
     private String readFileContent(String filepath) {
         try {
             String raw = readMaterial(filepath);
@@ -153,7 +285,6 @@ public class AppFacade {
         }
     }
 
-
     private <T extends AITemplate> T configureController(T controller, String prompt) {
         controller.setMaterials(course.getMaterials());
         controller.setAssessments(course.getAssessments());
@@ -171,20 +302,21 @@ public class AppFacade {
 
         sb.append("Course: ").append(course.getName()).append("\n");
 
-        if (!course.getMaterials().isEmpty()) {
+        if (!getSelectedMaterials().isEmpty()) {
             sb.append("Course materials:\n");
-            for (Material material : course.getMaterials()) {
-                if (material == null) {
-                    continue;
-                }
+            for (Material material : getSelectedMaterials()) {
+                if (material == null) continue;
                 String materialText = material.getContent();
                 if (materialText == null || materialText.isBlank()) {
-                    sb.append("--- ").append(material.getFilename()).append(" ---\n");
-                    sb.append("This uploaded file is in the course materials list, but no readable text content could be extracted.\n");
                     continue;
                 }
                 sb.append("--- ").append(material.getFilename()).append(" ---\n");
-                sb.append(materialText.trim()).append("\n");
+                int maxLength = 3000;
+                if (materialText.length() > maxLength) {
+                    sb.append(materialText.substring(0, maxLength)).append("\n...[truncated for length]...\n");
+                } else {
+                    sb.append(materialText.trim()).append("\n");
+                }
             }
         }
 
@@ -214,16 +346,6 @@ public class AppFacade {
 
     public String generateStudyPlan(String prompt) {
         StudyController controller = configureController(new StudyController(), prompt);
-        return controller.execute();
-    }
-
-    public String generateDeadlineSummary() {
-        DeadlineController controller = configureController(new DeadlineController(), "Summarize upcoming coursework deadlines and priorities.");
-        return controller.execute();
-    }
-
-    public String generateTaskList() {
-        TaskController controller = configureController(new TaskController(), "Create a task list for the next deadlines.");
         return controller.execute();
     }
 

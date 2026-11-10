@@ -1,10 +1,13 @@
 package course;
 
-import course.assessment.Assessment;
-import course.material.Material;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import course.assessment.Assessment;
+import course.material.Material;
 
 public class Course {
 
@@ -14,6 +17,7 @@ public class Course {
     private final List<Assessment> assessment;
     private final List<Material> materials;
     private final List<CourseListener> observers;
+    private final Set<String> selectedMaterialIds;
 
     public Course(String id, String name) {
         if (id == null || id.isBlank()) throw new IllegalArgumentException("Error - Course: ID required!");
@@ -25,6 +29,7 @@ public class Course {
         this.observers = new ArrayList<>();
         this.assessment = new ArrayList<>();
         this.materials = new ArrayList<>();
+        this.selectedMaterialIds = new HashSet<>();
         this.gradeReport = new GradeReport(id, 0f, this.assessment);
     }
 
@@ -71,9 +76,47 @@ public class Course {
         return Collections.unmodifiableList(materials);
     }
 
+    public List<Material> getSelectedMaterials() {
+        if (selectedMaterialIds.isEmpty()) {
+            return new ArrayList<>(materials);
+        }
+        return materials.stream()
+                .filter(material -> selectedMaterialIds.contains(material.getId()))
+                .toList();
+    }
+
+    public void setSelectedMaterialIds(List<String> ids) {
+        selectedMaterialIds.clear();
+        if (ids != null) {
+            for (String materialId : ids) {
+                if (materialId != null && !materialId.isBlank()) {
+                    selectedMaterialIds.add(materialId);
+                }
+            }
+        }
+        notifyObservers();
+    }
+
+    public void toggleMaterialSelection(String materialId, boolean selected) {
+        if (materialId == null || materialId.isBlank()) {
+            return;
+        }
+        if (selected) {
+            selectedMaterialIds.add(materialId);
+        } else {
+            selectedMaterialIds.remove(materialId);
+        }
+        notifyObservers();
+    }
+
+    public boolean isMaterialSelected(String materialId) {
+        return selectedMaterialIds.isEmpty() || selectedMaterialIds.contains(materialId);
+    }
+
     public void addMaterial(Material a) {
         if (a == null) throw new IllegalArgumentException("Error - Course: Material required!");
         materials.add(a);
+        selectedMaterialIds.add(a.getId());
         notifyObservers();
     }
 

@@ -1,24 +1,43 @@
-
-import ai.controller.AppFacade;
-import ai.factory.AIFactory;
-import course.Course;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.swing.*;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
+
+import ai.controller.AppFacade;
+import ai.factory.AIFactory;
+import course.Course;
 
 public class MainMenuGUI extends JFrame {
-    private final List<Course> courses = new ArrayList<>();
-    private final Map<String, AppFacade> courseFacades = new HashMap<>();
+    private static final List<Course> SHARED_COURSES = new ArrayList<>();
+    private static final Map<String, AppFacade> SHARED_FACADES = new HashMap<>();
+
+    private final List<Course> courses;
+    private final Map<String, AppFacade> courseFacades;
     private final List<JButton> courseButtons = new ArrayList<>();
-    private final JPanel courseListPanel;   // holds just the course buttons
+    private final JPanel courseListPanel;
     private final Dimension btnSize = new Dimension(420, 80);
 
     public MainMenuGUI(AppFacade appFacade) {
         super("StudyBuddy");
+        this.courses = SHARED_COURSES;
+        this.courseFacades = SHARED_FACADES;
 
         if (appFacade != null && appFacade.getCourse() != null) {
             registerCourse(appFacade.getCourse());
@@ -34,28 +53,23 @@ public class MainMenuGUI extends JFrame {
         title.setBorder(BorderFactory.createEmptyBorder(15, 10, 10, 10));
         add(title, BorderLayout.NORTH);
 
-        // ---- Left panel wrapper ----
-        // ---- Left panel wrapper ----
-        JPanel leftPanel = new JPanel(new BorderLayout(8, 8));   // ← BorderLayout, NOT BoxLayout
+        JPanel leftPanel = new JPanel(new BorderLayout(8, 8));
         leftPanel.setBorder(BorderFactory.createTitledBorder("Courses"));
         leftPanel.setPreferredSize(new Dimension(450, 0));
         add(leftPanel, BorderLayout.WEST);
 
-        // The panel that holds course buttons (goes INSIDE the scroll pane only)
         courseListPanel = new JPanel();
         courseListPanel.setLayout(new BoxLayout(courseListPanel, BoxLayout.Y_AXIS));
         courseListPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        // Wrap it in the scroll pane
         JScrollPane scrollPane = new JScrollPane(courseListPanel);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 
-        leftPanel.add(scrollPane, BorderLayout.CENTER);   // ← scroll pane in CENTER
+        leftPanel.add(scrollPane, BorderLayout.CENTER);
 
-        // ---- "Add Course" button pinned at bottom ----
         JButton addCourseBtn = new JButton("+ Add Course");
         Dimension addBtnSize = new Dimension(420, 40);
         addCourseBtn.setPreferredSize(addBtnSize);
@@ -65,9 +79,8 @@ public class MainMenuGUI extends JFrame {
 
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 5));
         bottomPanel.add(addCourseBtn);
-        leftPanel.add(bottomPanel, BorderLayout.SOUTH);   // ← pinned at bottom
+        leftPanel.add(bottomPanel, BorderLayout.SOUTH);
 
-        // ---- Right panel ----
         JPanel rightPanel = new JPanel(new BorderLayout(8, 8));
         rightPanel.setBorder(BorderFactory.createTitledBorder("Overview"));
         add(rightPanel, BorderLayout.CENTER);
@@ -78,6 +91,14 @@ public class MainMenuGUI extends JFrame {
         overviewText.setWrapStyleWord(true);
         overviewText.setText("Select a course to view its materials, assessments, and AI study tools.");
         rightPanel.add(new JScrollPane(overviewText), BorderLayout.CENTER);
+
+        String modeLabel = "AI Mode: " + (AIFactory.createDefault().getClass().getSimpleName().contains("Online") ? "cloud" : "local");
+        JButton modeButton = new JButton(modeLabel);
+        modeButton.addActionListener(e -> switchAIMode());
+
+        JPanel topBar = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        topBar.add(modeButton);
+        rightPanel.add(topBar, BorderLayout.NORTH);
 
         refreshCourseButtons();
         setVisible(true);
@@ -115,7 +136,6 @@ public class MainMenuGUI extends JFrame {
                 "Add Course",
                 JOptionPane.PLAIN_MESSAGE);
 
-        // User cancelled or left it blank
         if (name == null) return;
         name = name.trim();
         if (name.isEmpty()) {
@@ -125,7 +145,6 @@ public class MainMenuGUI extends JFrame {
             return;
         }
 
-        // Prevent duplicates
         for (Course existing : courses) {
             if (existing.getName().equalsIgnoreCase(name)) {
                 JOptionPane.showMessageDialog(this,
@@ -147,13 +166,18 @@ public class MainMenuGUI extends JFrame {
         btn.setMinimumSize(btnSize);
         btn.setMaximumSize(btnSize);
         btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        // Clicking a course button -> open that course (hook into appFacade)
         btn.addActionListener(e -> openCourse(course));
 
         courseButtons.add(btn);
         courseListPanel.add(btn);
         courseListPanel.add(Box.createVerticalStrut(8));
+    }
+
+    private void switchAIMode() {
+        String current = System.getProperty("studybuddy.ai.mode", "auto");
+        String next = "local".equalsIgnoreCase(current) ? "cloud" : "local";
+        System.setProperty("studybuddy.ai.mode", next);
+        JOptionPane.showMessageDialog(this, "AI mode set to: " + next + "\nNew course instances will use this mode.");
     }
 
     private void openCourse(Course course) {

@@ -64,12 +64,11 @@ public class Assessment {
     }
 
     public double getGrade() {
-        return (this.score / this.maxScore) * 100.0;
+        return maxScore <= 0 ? 0.0 : (this.score / this.maxScore) * 100.0;
     }
 
     public void setScore(double score) {
         if (score < 0 || score > maxScore) throw new IllegalArgumentException("Error - Asssessment_setGrade: score is out of range");
-
         this.score = score;
     }
 
@@ -88,5 +87,9 @@ public class Assessment {
 
     public void complete() {
         this.completed = true;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 }
