@@ -67,6 +67,10 @@ public class Course {
         if (alreadyExists) {
             return;
         }
+        double totalWeight = assessment.stream().mapToDouble(Assessment::getWeight).sum() + a.getWeight();
+        if (totalWeight > 1.0 + 1e-9) {
+            throw new IllegalArgumentException("Total assessment weight cannot exceed 100%.");
+        }
         assessment.add(a);
         setGradeReport(gradeReport == null ? 0f : gradeReport.getCourseGoal());
         notifyObservers();
