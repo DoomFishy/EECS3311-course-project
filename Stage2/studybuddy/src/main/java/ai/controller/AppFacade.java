@@ -72,7 +72,6 @@ public class AppFacade {
         LocalDate today = LocalDate.now();
 
         return course.getAssessments().stream()
-                .filter(a -> !a.isCompleted())
                 .filter(a -> a.getDeadline() != null)
                 .filter(a -> !a.getDeadline().toLocalDate().isBefore(today))
                 .sorted((a, b) -> a.getDeadline().compareTo(b.getDeadline()))
@@ -143,18 +142,14 @@ public class AppFacade {
 
     public String generateDeadlineSummary() {
         StringBuilder sb = new StringBuilder();
-        List<Assessment> deadlines = getAssessments().stream()
-                .filter(a -> !a.isCompleted())
-                .filter(a -> a.getDeadline() != null)
-                .sorted((a, b) -> a.getDeadline().compareTo(b.getDeadline()))
-                .toList();
+        List<Assessment> thisWeek = getAssessments();
 
-        if (deadlines.isEmpty()) {
-            return "No upcoming assessments.";
+        if (thisWeek.isEmpty()) {
+            return "No upcoming assessments for this week.";
         }
 
-        sb.append("Deadlines:\n");
-        for (Assessment assessment : deadlines) {
+        sb.append("This week's deadlines:\n");
+        for (Assessment assessment : thisWeek) {
             sb.append("- ").append(assessment.getName())
               .append(" (")
               .append(assessment.getType())
@@ -427,10 +422,6 @@ public class AppFacade {
         }
 
         float normalizedWeight = weight <= 0 ? 0.25f : weight;
-        double existingWeight = course.getAssessments().stream().mapToDouble(Assessment::getWeight).sum();
-        if (existingWeight + normalizedWeight > 1.0 + 1e-9) {
-            throw new IllegalArgumentException("Total assessment weight cannot exceed 100%.");
-        }
         course.addAssessment(new Assessment(
                 "a" + (course.getAssessments().size() + 1),
                 normalizedName,

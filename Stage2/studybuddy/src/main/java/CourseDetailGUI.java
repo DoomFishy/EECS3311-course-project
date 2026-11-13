@@ -388,42 +388,6 @@ public class CourseDetailGUI extends JFrame {
             }
         }
 
-        if (!appFacade.getAssessments().isEmpty()) {
-            sb.append("\nMinimum required on each assessment:\n");
-            double goalPoints = appFacade.getGradeGoal() / 100.0;
-            double completedPointsForGoal = 0.0;
-            for (Assessment a : appFacade.getAssessments()) {
-                if (a.isCompleted()) {
-                    completedPointsForGoal += (a.getScore() / 100.0) * a.getWeight();
-                }
-            }
-            double targetNeeded = Math.max(0.0, goalPoints - completedPointsForGoal);
-            boolean hasIncomplete = false;
-            for (Assessment a : appFacade.getAssessments()) {
-                if (a.isCompleted()) {
-                    sb.append("- ").append(a.getName()).append(": completed (score: ")
-                      .append(String.format("%.0f", a.getScore())).append("%)\n");
-                    continue;
-                }
-                hasIncomplete = true;
-                if (a.getWeight() <= 0.0001) {
-                    sb.append("- ").append(a.getName()).append(": 0% (no weight)\n");
-                    continue;
-                }
-                double requiredForAssessment = (targetNeeded / a.getWeight()) * 100.0;
-                if (requiredForAssessment <= 0) {
-                    sb.append("- ").append(a.getName()).append(": 0% (goal already met)\n");
-                } else if (requiredForAssessment > 100) {
-                    sb.append("- ").append(a.getName()).append(": >100% (impossible at current weight)\n");
-                } else {
-                    sb.append("- ").append(a.getName()).append(": ").append(String.format("%.2f%%\n", requiredForAssessment));
-                }
-            }
-            if (!hasIncomplete && appFacade.getGradeGoal() > 0) {
-                sb.append("All assessments are already complete.\n");
-            }
-        }
-
         return sb.toString();
     }
 
@@ -433,27 +397,14 @@ public class CourseDetailGUI extends JFrame {
         }
 
         StringBuilder sb = new StringBuilder();
-        double goal = appFacade.getGradeGoal();
-        double completedPoints = 0.0;
-        for (Assessment a : appFacade.getAssessments()) {
-            if (a.isCompleted()) {
-                completedPoints += (a.getScore() / 100.0) * a.getWeight();
-            }
-        }
-        double targetNeeded = Math.max(0.0, goal / 100.0 - completedPoints);
-
         for (Assessment a : appFacade.getAssessments()) {
             sb.append("- ").append(a.getName())
               .append(" (" ).append(a.getType()).append(")")
-              .append(" | Weight: ").append(String.format("%.2f", a.getWeight() * 100.0))
-              .append("% | Due: ").append(a.getDeadline().toLocalDate())
+              .append(" | Weight: ").append(a.getWeight())
+              .append(" | Due: ").append(a.getDeadline().toLocalDate())
               .append(" | Score: ").append(String.format("%.0f", a.getScore()))
-              .append(" | Completed: ").append(a.isCompleted() ? "Yes" : "No");
-            if (!a.isCompleted() && goal > 0 && a.getWeight() > 0.0001) {
-                double required = (targetNeeded / a.getWeight()) * 100.0;
-                sb.append(" | Min needed: ").append(required <= 0 ? "0%" : required > 100 ? ">100%" : String.format("%.2f%%", required));
-            }
-            sb.append("\n");
+              .append(" | Completed: ").append(a.isCompleted() ? "Yes" : "No")
+              .append("\n");
         }
         return sb.toString();
     }
