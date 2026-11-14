@@ -206,16 +206,15 @@ public class CourseDetailGUI extends JFrame {
             int result = chooser.showOpenDialog(this);
             if (result == JFileChooser.APPROVE_OPTION) {
                 File file = chooser.getSelectedFile();
-                appFacade.uploadFile(file.getAbsolutePath());
-                outputArea.setText(appFacade.uploadFileAndAnalyze(file.getAbsolutePath()));
+                outputArea.setText(appFacade.uploadFile(file.getAbsolutePath()));
                 refreshViews();
             }
         });
 
         reportButton.addActionListener(e -> runAsync(() -> appFacade.generateReport(), "Could not generate report"));
-        notesButton.addActionListener(e -> runAsync(() -> appFacade.generateNotes(questionField.getText()), "Could not generate notes"));
-        quizButton.addActionListener(e -> runAsync(() -> appFacade.generateQuiz(questionField.getText()), "Could not generate quiz"));
-        studyButton.addActionListener(e -> runAsync(() -> appFacade.generateStudyPlan(questionField.getText()), "Could not generate study plan"));
+        notesButton.addActionListener(e -> runAsync(() -> appFacade.generateNotes(), "Could not generate notes"));
+        quizButton.addActionListener(e -> runAsync(() -> appFacade.generateQuiz(), "Could not generate quiz"));
+        studyButton.addActionListener(e -> runAsync(() -> appFacade.generateStudyPlan(), "Could not generate study plan"));
         
         deadlineButton.addActionListener(e -> refreshViews());
         taskButton.addActionListener(e -> refreshViews());
@@ -249,7 +248,7 @@ public class CourseDetailGUI extends JFrame {
             String type = JOptionPane.showInputDialog(this, "Type (QUIZ, EXAM, ASSIGNMENT, PROJECT):", "Add Assessment", JOptionPane.PLAIN_MESSAGE);
 
             try {
-                appFacade.addManualAssessment(name, dueDate, weight == null ? "25" : weight, type);
+                appFacade.addAssessment(name, dueDate, weight == null ? "25" : weight, type);
                 refreshViews();
                 outputArea.setText("Added assessment: " + name + " due " + dueDate);
             } catch (Exception ex) {

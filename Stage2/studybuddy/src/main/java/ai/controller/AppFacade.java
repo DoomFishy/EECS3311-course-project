@@ -16,10 +16,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-import ai.agent.Agent;
 import ai.agent.EmbeddingTool;
 import ai.factory.AIFactory;
-import ai.llm.llmSource;
 import ai.template.AITemplate;
 import ai.tool.Tool;
 import ai.tool.ToolFactory;
@@ -48,12 +46,24 @@ public class AppFacade {
         return course.getAssessments();
     }
 
+    public void addAssessment(Assessment a) {
+        course.addAssessment(a);
+    }
+
     public List<Material> getMaterials() {
         return course.getMaterials();
     }
 
+    public void addMaterial(Material m) {
+        course.addMaterial(m);
+    }
+
     public List<Material> getSelectedMaterials() {
         return course.getSelectedMaterials();
+    }
+
+    public void setSelectedMaterialsIds(List<String> ids) {
+        course.setSelectedMaterialIds(ids);
     }
 
     public void setSelectedMaterials(List<Material> selectedMaterials) {
@@ -65,13 +75,13 @@ public class AppFacade {
                 }
             }
         }
-        course.setSelectedMaterialIds(ids);
+        setSelectedMaterialsIds(ids);
     }
 
     public List<Assessment> getUpcomingAssessments() {
         LocalDate today = LocalDate.now();
 
-        return course.getAssessments().stream()
+        return getAssessments().stream()
                 .filter(a -> a.getDeadline() != null)
                 .filter(a -> !a.getDeadline().toLocalDate().isBefore(today))
                 .sorted((a, b) -> a.getDeadline().compareTo(b.getDeadline()))
@@ -96,48 +106,67 @@ public class AppFacade {
     }
 
     public String askQuestion(String question) {
-        llmSource llm = factory.createLlmSource();
-        Agent agent = new Agent();
+        if (question == null || question.isBlank()) {
+            throw new IllegalArgumentException("Question is required.");
+        }
 
-        List<String> materials = getSelectedMaterials().stream()
-                .map(Material::getContent)
-                .filter(content -> content != null && !content.isBlank())
-                .toList();
-        List<String> assessments = course.getAssessments().stream()
-                .map(Assessment::getName)
-                .toList();
-
-        StringBuilder context = new StringBuilder();
+        StringBuilder promptBuilder = new StringBuilder();
         if (!conversationHistory.isEmpty()) {
-            context.append("Previous conversation:\n");
+            promptBuilder.append("Previous conversation:\n");
             for (String entry : conversationHistory) {
-                context.append(entry).append("\n");
+                promptBuilder.append(entry).append("\n");
             }
-            context.append("\n");
-        }
-        if (!materials.isEmpty()) {
-            context.append(String.join("\n", materials)).append("\n");
-        }
-        if (!assessments.isEmpty()) {
-            context.append(String.join("\n", assessments));
+            promptBuilder.append("\n");
         }
 
-        if (context.isEmpty()) {
-            context.append("Course: ").append(course.getName()).append("\n");
+        if (!getSelectedMaterials().isEmpty()) {
+            promptBuilder.append("Course materials:\n");
+            for (Material material : getSelectedMaterials()) {
+                if (material == null) continue;
+                String materialText = material.getContent();
+                if (materialText == null || materialText.isBlank()) {
+                    continue;
+                }
+                promptBuilder.append("--- ").append(material.getFilename()).append(" ---\n");
+                int maxLength = 3000;
+                if (materialText.length() > maxLength) {
+                    promptBuilder.append(materialText.substring(0, maxLength)).append("\n...[truncated for length]...\n");
+                } else {
+                    promptBuilder.append(materialText.trim()).append("\n");
+                }
+            }
         }
 
-        String response = agent.execute(question, context.toString(), llm).getResult();
+        if (!getAssessments().isEmpty()) {
+            promptBuilder.append("Assessments:\n");
+            for (Assessment assessment : getAssessments()) {
+                promptBuilder.append("- ").append(assessment.getName())
+                        .append(" | ").append(assessment.getType())
+                        .append(" | weight ").append(assessment.getWeight())
+                        .append(" | due ").append(assessment.getDeadline().toLocalDate())
+                        .append("\n");
+            }
+        }
+
+        if (promptBuilder.length() == 0) {
+            promptBuilder.append("Course: ").append(course.getName()).append("\n");
+        }
+
+        promptBuilder.append("\nQuestion: ").append(question).append("\n");
+
+        LanguageQAController controller = configureController(new LanguageQAController(), promptBuilder.toString());
+        String response = controller.execute();
         conversationHistory.add("User: " + question);
         conversationHistory.add("AI: " + response);
         return response;
     }
 
     public String generateReport() {
-        llmSource llm = factory.createLlmSource();
-        String prompt = buildCourseContextPrompt(
-                "Generate a brief progress report for this course. Include new materials uploaded since last time, upcoming work this week, and any grade risks."
+        ReportController controller = configureController(
+                new ReportController(),
+                ""
         );
-        return llm.run(prompt);
+        return controller.execute();
     }
 
     public String generateDeadlineSummary() {
@@ -182,14 +211,14 @@ public class AppFacade {
         return sb.toString();
     }
 
-    public void uploadFile(String filepath) {
+    public String uploadFile(String filepath) {
         if (filepath == null || filepath.isBlank()) {
             throw new IllegalArgumentException("Error - AppFacade: Filepath required!");
         }
 
         String normalizedPath = filepath.trim();
-        if (course.getMaterials().stream().anyMatch(material -> material.getFilepath().equals(normalizedPath))) {
-            return;
+        if (getMaterials().stream().anyMatch(material -> material.getFilepath().equals(normalizedPath))) {
+            return "File already uploaded: " + normalizedPath;
         }
 
         String filename = Paths.get(normalizedPath).getFileName() != null
@@ -206,8 +235,8 @@ public class AppFacade {
             type = MaterialType.Link;
         }
 
-        Material material = new Material("m" + (course.getMaterials().size() + 1), filename, normalizedPath, type);
-        course.addMaterial(material);
+        Material material = new Material("m" + (getMaterials().size() + 1), filename, normalizedPath, type);
+        addMaterial(material);
 
         try {
             String extractedText = readFileContent(normalizedPath);
@@ -219,20 +248,12 @@ public class AppFacade {
         } catch (Exception ignored) {
             material.setContent("Uploaded file: " + filename + ". No readable text content could be extracted from this file format. The file is available in the course materials list.");
         }
-    }
-
-    public String uploadFileAndAnalyze(String filepath) {
-        uploadFile(filepath);
-
-        if (course.getMaterials().isEmpty()) {
-            return "Uploaded file: " + filepath;
-        }
 
         StringBuilder sb = new StringBuilder();
-        sb.append("Uploaded file: ").append(filepath).append("\n");
+        sb.append("Uploaded file: ").append(normalizedPath).append("\n");
         sb.append("Course materials now available for AI controllers:\n");
-        for (Material material : course.getMaterials()) {
-            sb.append("- ").append(material.getFilename()).append("\n");
+        for (Material courseMaterial : course.getMaterials()) {
+            sb.append("- ").append(courseMaterial.getFilename()).append("\n");
         }
         return sb.toString();
     }
@@ -249,7 +270,7 @@ public class AppFacade {
     }
 
     public String getCurrentGradeSummary() {
-        double average = course.getAssessments().stream().mapToDouble(Assessment::getGrade).average().orElse(0.0);
+        double average = getAssessments().stream().mapToDouble(Assessment::getGrade).average().orElse(0.0);
         return String.format(Locale.US, "Current average: %.2f%% | Grade goal: %.2f%%", average, getGradeGoal());
     }
 
@@ -260,41 +281,6 @@ public class AppFacade {
     public String getAIMode() {
         String mode = System.getProperty("studybuddy.ai.mode", System.getenv().getOrDefault("STUDYBUDDY_AI_MODE", "auto"));
         return mode == null ? "auto" : mode;
-    }
-
-    private String buildCourseContextPrompt(String instruction) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(instruction).append("\n\n");
-        sb.append("Course: ").append(course.getName()).append("\n");
-        sb.append("Course grade goal: ").append(getGradeGoal()).append("%\n");
-
-        if (!getSelectedMaterials().isEmpty()) {
-            sb.append("Selected materials:\n");
-            for (Material material : getSelectedMaterials()) {
-                if (material.getContent() != null && !material.getContent().isBlank()) {
-                    sb.append("--- ").append(material.getFilename()).append(" ---\n");
-                    String text = material.getContent();
-                    if (text.length() > 3000) {
-                        text = text.substring(0, 3000) + "\n...[truncated]\n";
-                    }
-                    sb.append(text).append("\n");
-                }
-            }
-        }
-
-        if (!course.getAssessments().isEmpty()) {
-            sb.append("Assessments:\n");
-            for (Assessment assessment : course.getAssessments()) {
-                sb.append("- ").append(assessment.getName())
-                        .append(" | type: ").append(assessment.getType())
-                        .append(" | due: ").append(assessment.getDeadline().toLocalDate())
-                        .append(" | weight: ").append(assessment.getWeight())
-                        .append(" | score: ").append(assessment.getScore())
-                        .append("\n");
-            }
-        }
-
-        return sb.toString();
     }
 
     private String readFileContent(String filepath) {
@@ -320,8 +306,8 @@ public class AppFacade {
     }
 
     private <T extends AITemplate> T configureController(T controller, String prompt) {
-        controller.setMaterials(course.getMaterials());
-        controller.setAssessments(course.getAssessments());
+        controller.setMaterials(getMaterials());
+        controller.setAssessments(getAssessments());
         controller.setLLM(factory.createLlmSource());
         String fullPrompt = buildControllerPrompt(prompt);
         controller.setPrompt(fullPrompt);
@@ -354,9 +340,9 @@ public class AppFacade {
             }
         }
 
-        if (!course.getAssessments().isEmpty()) {
+        if (!getAssessments().isEmpty()) {
             sb.append("Manual coursework assessments:\n");
-            for (Assessment assessment : course.getAssessments()) {
+            for (Assessment assessment : getAssessments()) {
                 sb.append("- ").append(assessment.getName())
                         .append(" | ").append(assessment.getType())
                         .append(" | weight ").append(assessment.getWeight())
@@ -368,26 +354,37 @@ public class AppFacade {
         return sb.toString();
     }
 
-    public String generateNotes(String prompt) {
-        NotesController controller = configureController(new NotesController(), prompt);
-        return controller.execute();
+    public String generateNotes() {
+        NotesController controller = configureController(
+                new NotesController(),
+                ""
+        );
+        return controller.execute();    
     }
 
-    public String generateQuiz(String prompt) {
-        QuizController controller = configureController(new QuizController(), prompt);
-        return controller.execute();
+    public String generateQuiz() {
+        QuizController controller = configureController(
+                new QuizController(),
+                ""
+        );
+        return controller.execute();    
     }
 
-    public String generateStudyPlan(String prompt) {
-        StudyController controller = configureController(new StudyController(), prompt);
-        return controller.execute();
+    public String generateStudyPlan() {
+        StudyController controller = configureController(
+                new StudyController(),
+                ""
+        );
+        return controller.execute();        
     }
 
-    public String generateCourseReport(String prompt) {
-        ReportController controller = configureController(new ReportController(), prompt);
-        return controller.execute();
+    public String generateCourseReport() {
+        ReportController controller = configureController(
+                new ReportController(),
+                ""
+        );
+        return controller.execute();        
     }
-
     public EmbeddingTool createEmbeddingTool() {
         return new EmbeddingTool(factory.createEmbeddings(), factory.createVectorStore());
     }
@@ -405,34 +402,7 @@ public class AppFacade {
         return ToolFactory.findBestTool(materialPath);
     }
 
-    public void addAssessment(String name, LocalDateTime deadline, float weight, AssessmentType type) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("Assessment name is required.");
-        }
-        if (deadline == null) {
-            throw new IllegalArgumentException("Assessment deadline is required.");
-        }
-        if (type == null) {
-            throw new IllegalArgumentException("Assessment type is required.");
-        }
-
-        String normalizedName = name.trim();
-        if (course.getAssessments().stream().anyMatch(existing -> existing.getName().equalsIgnoreCase(normalizedName))) {
-            return;
-        }
-
-        float normalizedWeight = weight <= 0 ? 0.25f : weight;
-        course.addAssessment(new Assessment(
-                "a" + (course.getAssessments().size() + 1),
-                normalizedName,
-                100,
-                deadline,
-                normalizedWeight,
-                type
-        ));
-    }
-
-    public void addManualAssessment(String name, String dateText, String weightText, String typeText) {
+    public void addAssessment(String name, String dateText, String weightText, String typeText) {
         String cleanedName = name == null ? "" : name.trim();
         if (cleanedName.isBlank()) {
             throw new IllegalArgumentException("Assessment name is required.");
@@ -461,7 +431,22 @@ public class AppFacade {
             }
         }
 
-        addAssessment(cleanedName, deadline, weight, type);
+        
+        String normalizedName = name.trim();
+        if (getAssessments().stream().anyMatch(existing -> existing.getName().equalsIgnoreCase(normalizedName))) {
+            return;
+        }
+
+        float normalizedWeight = weight <= 0 ? 0.25f : weight;
+        addAssessment(new Assessment(
+                "a" + (getAssessments().size() + 1),
+                normalizedName,
+                100,
+                deadline,
+                normalizedWeight,
+                type
+        ));
+
     }
 
     private LocalDateTime parseManualDate(String dateText) {

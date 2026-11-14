@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.io.File;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -142,7 +143,7 @@ public class HomeGUI extends JFrame {
         notesButton.addActionListener(e -> {
             new Thread(() -> {
                 try {
-                    String result = appFacade.generateNotes(questionField.getText());
+                    String result = appFacade.generateNotes();
                     outputArea.setText(result);
                 } catch (Exception ex) {
                     outputArea.setText("Could not generate notes: " + ex.getMessage());
@@ -153,7 +154,7 @@ public class HomeGUI extends JFrame {
         quizButton.addActionListener(e -> {
             new Thread(() -> {
                 try {
-                    String result = appFacade.generateQuiz(questionField.getText());
+                    String result = appFacade.generateQuiz();
                     outputArea.setText(result);
                 } catch (Exception ex) {
                     outputArea.setText("Could not generate quiz: " + ex.getMessage());
@@ -164,7 +165,7 @@ public class HomeGUI extends JFrame {
         studyButton.addActionListener(e -> {
             new Thread(() -> {
                 try {
-                    String result = appFacade.generateStudyPlan(questionField.getText());
+                    String result = appFacade.generateStudyPlan();
                     outputArea.setText(result);
                 } catch (Exception ex) {
                     outputArea.setText("Could not generate study plan: " + ex.getMessage());

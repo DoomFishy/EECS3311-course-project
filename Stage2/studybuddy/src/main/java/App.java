@@ -121,7 +121,7 @@ public class App {
             Course target = getDefaultCourse();
             AppFacade facade = new AppFacade(AIFactory.createDefault(), target);
             try {
-                facade.addManualAssessment(name, date, weight, type);
+                facade.addAssessment(name, date, weight, type);
                 System.out.println("Assessment added: " + name + " on " + date);
             } catch (Exception ex) {
                 System.out.println("Could not add assessment: " + ex.getMessage());
@@ -210,7 +210,7 @@ public class App {
                 Course target = getDefaultCourse();
                 AppFacade facade = new AppFacade(AIFactory.createDefault(), target);
                 try {
-                    facade.addManualAssessment(name, date, weight, type);
+                    facade.addAssessment(name, date, weight, type);
                     System.out.println("Assessment added: " + name + " on " + date);
                 } catch (Exception ex) {
                     System.out.println("Could not add assessment: " + ex.getMessage());
