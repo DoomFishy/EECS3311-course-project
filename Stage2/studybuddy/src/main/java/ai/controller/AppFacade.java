@@ -81,6 +81,7 @@ public class AppFacade {
 
         return getAssessments().stream()
                 .filter(a -> a.getDeadline() != null)
+                .filter(a -> !a.isCompleted())
                 .filter(a -> !a.getDeadline().toLocalDate().isBefore(today))
                 .sorted((a, b) -> a.getDeadline().compareTo(b.getDeadline()))
                 .toList();
@@ -91,6 +92,7 @@ public class AppFacade {
         LocalDate endOfWindow = today.plusDays(6);
 
         return getUpcomingAssessments().stream()
+                .filter(a -> !a.isCompleted())
                 .filter(a -> {
                     LocalDate dueDate = a.getDeadline().toLocalDate();
                     return (!dueDate.isBefore(today)) && (!dueDate.isAfter(endOfWindow));
