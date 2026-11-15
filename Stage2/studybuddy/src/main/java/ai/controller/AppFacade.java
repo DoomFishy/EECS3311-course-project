@@ -168,14 +168,14 @@ public class AppFacade {
 
     public String generateDeadlineSummary() {
         StringBuilder sb = new StringBuilder();
-        List<Assessment> thisWeek = getThisWeekAssessments();
+        List<Assessment> upcoming = getUpcomingAssessments();
 
-        if (thisWeek.isEmpty()) {
-            return "No upcoming assessments in the next 7 days.";
+        if (upcoming.isEmpty()) {
+            return "No upcoming assessments.";
         }
 
-        sb.append("Upcoming deadlines (next 7 days):\n");
-        for (Assessment assessment : thisWeek) {
+        sb.append("Upcoming deadlines:\n");
+        for (Assessment assessment : upcoming) {
             sb.append("- ").append(assessment.getName())
               .append(" (")
               .append(assessment.getType())
