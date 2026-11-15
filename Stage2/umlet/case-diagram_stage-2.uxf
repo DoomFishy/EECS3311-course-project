@@ -1,0 +1,360 @@
+<diagram program="umletino" version="15.1"><zoom_level>7</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>917</x><y>1022</y><w>273</w><h>238</h></coordinates><panel_attributes>Course
+--
+- id: String
+- name: String
+- gradeReport: GradeReport
+- assessments: List&lt;Assessment&gt;
+- materials: List&lt;Materials&gt;
+- selectedMaterialIds: Set&lt;String&gt;
+- observers: &lt;CourseListener&gt;
+--
++ addAssessment(Assessment a): void
++ addMaterial(Material m): void
++ getSelectedMaterials(): List&lt;Material&gt;
++ setSelectedMaterialIds(List&lt;String&gt; ids): void
++ toggleMaterialSelection(String materialId, boolean selected): void
++ getGradeReport(): GradeReport
++ setGradeReport(float gradeGoal): void
++ getAssessments(): List&lt;Assessment&gt;
++ addAssessment(Assessment a): void
+
++ addObservers(CourseListener a): void
++ removeObservers(CourseListener a): void
++ notify(String filepath): void
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>539</x><y>1022</y><w>147</w><h>154</h></coordinates><panel_attributes>Assessment
+--
+- id: String
+- name: String
+- deadline: dateTime
+- weight: Float
+- priorityScore: float
+- type: AssessmentType
+- grade: Grade
+- completed: boolean
+--
++ complete(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>385</x><y>1050</y><w>105</w><h>84</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
+AssessmentType
+--
+Assignment
+Quiz
+Exam
+Lab</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>539</x><y>1253</y><w>147</w><h>77</h></coordinates><panel_attributes>Materials
+--
+-id: String
+-filename: String
+-type: MaterialType
+-filepath: String
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>378</x><y>1253</y><w>105</w><h>77</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
+MaterialType
+--
+PDF
+Slide
+Link</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>539</x><y>819</y><w>147</w><h>98</h></coordinates><panel_attributes>GradeReport
+--
+- id: String
+- currentCourseAverage: float
+- courseGoal: float
+- assessments: List&lt;Assessment&gt;
+--
++ calculateAverage(): float
++ setGoal(g: float): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1029</x><y>252</y><w>189</w><h>217</h></coordinates><panel_attributes>MainMenuGUI
+--
+- SHARED_COURSES: List&lt;Course&gt;
+- SHARED_FACADES: Map&lt;String, AppFacade&gt;
+- courses: List&lt;Course&gt;
+- courseFacades: Map&lt;String, AppFacade&gt;
+- courseButtons: List&lt;JButton&gt;
+- courseListPanel: JPanel
+- overviewText: JTextArea
+- btnSize: Dimension
+--
++ MainMenuGUI(AppFacade): constructor
++ registerCourse(Course): void
++ refreshCourseButtons(): void
++ updateOverview(): void
++ buildOverviewText(): String
++ onAddCourseClicked(): void
++ addCourseButton(Course): void
++ deleteCourse(Course): void
++ switchAIMode(): void
++ openCourse(Course): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1533</x><y>1022</y><w>238</w><h>203</h></coordinates><panel_attributes>AppFacade
+--
+
+--
++ getDeadlines(courseId: String): void
+
++ rankDeadlines(courseId: String, deadlines: String): void
+
++ answerQuestion(q: String): void
+
++ generateReport(): void
+
++ generatePlan(): void
++ generateQuiz(s: String): void
+
++ computeGrade(courseId, scores): void
++ addAssessmentScore(grade: float): void
+
++ uploadFile(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1533</x><y>1001</y><w>70</w><h>21</h></coordinates><panel_attributes>Facade</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>539</x><y>672</y><w>147</w><h>77</h></coordinates><panel_attributes>&lt;&lt;Interfaces&gt;&gt;
+CourseListener
+--
+
+--
++ update(e: type, filepath: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>539</x><y>651</y><w>70</w><h>21</h></coordinates><panel_attributes>Observer</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2338</x><y>1806</y><w>287</w><h>77</h></coordinates><panel_attributes>Agent
+--
+
+--
++ execute(prompt: String, data: String, llm: llmSource): AgentResult</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1974</x><y>511</y><w>147</w><h>70</h></coordinates><panel_attributes>PDFReaderTool
+--
+
+--
++ execute(String): String
++ supports(String): boolean
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1855</x><y>679</y><w>147</w><h>77</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt;
+Tool
+--
+
+--
++ defaultTools(): List&lt;Tool&gt;
++ findBestTool(String): Tool
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1736</x><y>511</y><w>147</w><h>70</h></coordinates><panel_attributes>FileReaderTool
+--
+
+--
++ execute(String): String
++ supports(String): boolean
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1953</x><y>574</y><w>84</w><h>119</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;150;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1827</x><y>574</y><w>77</w><h>119</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>90;150;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>2058</x><y>1330</y><w>147</w><h>91</h></coordinates><panel_attributes>LanguageQAController
+--
+
+--
++ execute(): string
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2058</x><y>826</y><w>147</w><h>91</h></coordinates><panel_attributes>StudyController
+--
+
+--
++ execute(): string
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2058</x><y>1078</y><w>147</w><h>91</h></coordinates><panel_attributes>NotesController
+--
+
+--
++ execute(): string
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2058</x><y>952</y><w>147</w><h>91</h></coordinates><panel_attributes>ReportController
+--
+
+--
++ execute(): string
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2058</x><y>1204</y><w>147</w><h>91</h></coordinates><panel_attributes>QuizController
+--
+
+--
++ execute(): string
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>168</x><y>1190</y><w>154</w><h>49</h></coordinates><panel_attributes>MaterialTracker
+--
+
+--
++ update(e: type, filepath: String: void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>154</x><y>826</y><w>161</w><h>49</h></coordinates><panel_attributes>AssessmentTracker
+--
+
+--
++ update(e: type, filepath: String): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2338</x><y>1043</y><w>161</w><h>168</h></coordinates><panel_attributes>&lt;&lt;abstract&gt;&gt;
+AITemplate
+--
+- prompt: String
+- materials: List&lt;Materials&gt;
+- assessments: List&lt;assessments&gt;
+- agent: Agent
+- llm: llmSource
+- embed: EmbeddingTool
+--
++ getMaterials(): void
++ getAssessments(): void
++ setEmbed(e: EmbeddingTool): void
++ setLLM(llm: llmSource): void
++ setPrompt(String prompt): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2338</x><y>1022</y><w>70</w><h>21</h></coordinates><panel_attributes>Template</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2772</x><y>1806</y><w>147</w><h>70</h></coordinates><panel_attributes>AgentResult
+--
+- confidence: Float
+- citations: String
+- result: String
+--
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>2618</x><y>1834</y><w>168</w><h>21</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>220;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>2345</x><y>1666</y><w>196</w><h>105</h></coordinates><panel_attributes>Storage
+--
+- root: String
+--
++ read(path: String): byte[]
++ list(folder: String): List&lt;String&gt;
++ exists(path: String): boolean
++ write(path: String, data: byte[]): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>483</x><y>1092</y><w>70</w><h>21</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;80;10</additional_attributes></element><element><id>Relation</id><coordinates><x>476</x><y>1288</y><w>77</w><h>21</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;90;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1764</x><y>875</y><w>308</w><h>196</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>420;10;140;10;140;260;10;260</additional_attributes></element><element><id>Relation</id><coordinates><x>1764</x><y>987</y><w>308</w><h>105</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>420;10;180;10;180;130;10;130</additional_attributes></element><element><id>Relation</id><coordinates><x>1764</x><y>1113</y><w>308</w><h>21</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>420;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1764</x><y>1190</y><w>308</w><h>189</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>420;250;150;250;150;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1764</x><y>1155</y><w>308</w><h>112</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>420;140;190;140;190;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>2198</x><y>1120</y><w>154</w><h>21</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>200;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>2198</x><y>987</y><w>154</w><h>119</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>200;150;110;150;110;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>2198</x><y>868</y><w>154</w><h>203</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>200;270;140;270;140;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>2198</x><y>1155</y><w>154</w><h>112</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>200;10;110;10;110;140;10;140</additional_attributes></element><element><id>Relation</id><coordinates><x>2198</x><y>1197</y><w>154</w><h>189</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>200;10;140;10;140;250;10;250</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1351</x><y>1652</y><w>182</w><h>77</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+AIFactory
+--
+
+--
++ createLlmSource(): llmSource
++ createEmbeddings(): EmbeddingProvider
++ createVectorStore(): VectorStore</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1351</x><y>1631</y><w>70</w><h>21</h></coordinates><panel_attributes>Factory</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1190</x><y>1897</y><w>147</w><h>91</h></coordinates><panel_attributes>OfflineFactory
+--
+
+--
++ createLlmSource(): llmSource
++ createEmbeddings(): EmbeddingProvider
++ createVectorStore(): VectorStore</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1533</x><y>1897</y><w>147</w><h>98</h></coordinates><panel_attributes>OnlineFactory
+--
+
+--
++ createLlmSource(): llmSource
++ createEmbeddings(): EmbeddingProvider
++ createVectorStore(): VectorStore</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1470</x><y>1722</y><w>140</w><h>189</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;190;180;190;180;250</additional_attributes></element><element><id>Relation</id><coordinates><x>1281</x><y>1722</y><w>140</w><h>189</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>180;10;180;190;10;190;10;250</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1050</x><y>2149</y><w>147</w><h>56</h></coordinates><panel_attributes>CloudllmSource
+--
+
+--
++ run(context: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1372</x><y>2149</y><w>147</w><h>49</h></coordinates><panel_attributes>CloudEmbedder
+--
+
+--
++ embed(text: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1701</x><y>2058</y><w>189</w><h>77</h></coordinates><panel_attributes>CloudVectorStore
+--
+
+--
++ delete(id: String): void
++ query(vector: float[], index: int) List&lt;Chunk&gt;
++ upsert(id: String, vector: float[]): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1050</x><y>2058</y><w>147</w><h>56</h></coordinates><panel_attributes>LocalllmSource
+--
+
+--
++ run(context: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1372</x><y>2058</y><w>147</w><h>56</h></coordinates><panel_attributes>LocalEmbedder
+--
+
+--
++ embed(text: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1701</x><y>2156</y><w>189</w><h>77</h></coordinates><panel_attributes>LocalVectorStore
+--
+
+--
++ delete(id: String): void
++ query(vector: float[], index: int) List&lt;Chunk&gt;
++ upsert(id: String, vector: float[]): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1701</x><y>2338</y><w>189</w><h>77</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+VectorStore
+--
+
+--
++ delete(id: String): void
++ query(vector: float[], index: int) List&lt;Chunk&gt;
++ upsert(id: String, vector: float[]): void
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1372</x><y>2331</y><w>147</w><h>77</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+EmbeddingProvider
+--
+
+--
++ embed(text: String): float[]
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1372</x><y>2310</y><w>70</w><h>21</h></coordinates><panel_attributes>Strategy</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1701</x><y>2317</y><w>70</w><h>21</h></coordinates><panel_attributes>Strategy</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2338</x><y>1925</y><w>189</w><h>133</h></coordinates><panel_attributes>EmbeddingTool
+--
+- embedder: EmbeddingProvider
+- vectorStore: VectoreStore
+--
++ query(vector: float[], index: int) List&lt;Chunk&gt;
++ upsert(id: String, vector: float[]): void
++ embed(text: String)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>868</x><y>1848</y><w>147</w><h>77</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+llmSource
+--
+
+--
++ run(context: String): String
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>868</x><y>1827</y><w>70</w><h>21</h></coordinates><panel_attributes>Strategy</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1190</x><y>1981</y><w>77</w><h>119</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;150;90;150;90;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1274</x><y>1981</y><w>112</w><h>119</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>140;150;10;150;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1260</x><y>1981</y><w>455</w><h>287</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>630;320;470;320;470;390;10;390;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1190</x><y>1988</y><w>441</w><h>245</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;270;80;270;80;330;610;330;610;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1512</x><y>1988</y><w>84</w><h>196</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;260;100;260;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1638</x><y>1988</y><w>77</w><h>126</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>90;160;10;160;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1456</x><y>2191</y><w>21</w><h>154</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;200</additional_attributes></element><element><id>Relation</id><coordinates><x>1330</x><y>2093</y><w>56</w><h>280</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>60;10;10;10;10;380;60;380</additional_attributes></element><element><id>Relation</id><coordinates><x>1827</x><y>2226</y><w>21</w><h>126</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;160</additional_attributes></element><element><id>Relation</id><coordinates><x>1883</x><y>2093</y><w>70</w><h>301</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;80;10;80;410;10;410</additional_attributes></element><element><id>Relation</id><coordinates><x>1344</x><y>2163</y><w>42</w><h>189</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>40;10;10;10;10;250;40;250</additional_attributes></element><element><id>Relation</id><coordinates><x>1883</x><y>2184</y><w>49</w><h>189</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;50;10;50;250;10;250</additional_attributes></element><element><id>Relation</id><coordinates><x>945</x><y>1918</y><w>119</w><h>182</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;240;150;240</additional_attributes></element><element><id>Relation</id><coordinates><x>903</x><y>1918</y><w>161</w><h>273</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;370;210;370</additional_attributes></element><element><id>Relation</id><coordinates><x>679</x><y>868</y><w>252</w><h>210</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>340;280;100;280;100;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>602</x><y>910</y><w>21</w><h>126</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;160;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>679</x><y>1092</y><w>252</w><h>21</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>340;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>679</x><y>1197</y><w>252</w><h>98</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>340;10;130;10;130;120;10;120</additional_attributes></element><element><id>Relation</id><coordinates><x>679</x><y>728</y><w>252</w><h>322</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>340;440;150;440;150;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>308</x><y>721</y><w>245</w><h>147</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;190;210;190;210;10;330;10</additional_attributes></element><element><id>Relation</id><coordinates><x>315</x><y>1211</y><w>301</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;410;10;410;60</additional_attributes></element><element><id>Relation</id><coordinates><x>266</x><y>868</y><w>287</w><h>182</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>390;240;10;240;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>315</x><y>1225</y><w>280</w><h>42</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>380;40;380;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1442</x><y>266</y><w>147</w><h>91</h></coordinates><panel_attributes>App
+--
+
+--
++ main(String[] args): void
++ launchGui(): void
++ runCli(String[] args): void
++ interactiveCli(): void
++ printUsage(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1211</x><y>287</y><w>245</w><h>21</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;330;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>798</x><y>252</y><w>189</w><h>231</h></coordinates><panel_attributes>CourseDetailGUI
+--
+- appFacade: AppFacade
+- outputArea: JTextArea
+- questionField: JTextField
+- summaryArea: JTextArea
+- assessmentsArea: JTextArea
+- materialSelectionPanel: JPanel
+- taskPanel: JPanel
+- deadlinePanel: JPanel
+- askButton: JButton
+--
++ CourseDetailGUI(AppFacade): constructor
++ rebuildMaterialSelection(): void
++ refreshViews(): void
++ buildCourseSummary(): String
++ buildAssessmentList(): String
++ setLoadingState(boolean): void
++ runAsync(CheckedTask, String): void
++ submitQuestion(): void
++ CheckedTask: functional interface
++ run(): String
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1211</x><y>406</y><w>357</w><h>609</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>490;850;490;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>959</x><y>476</y><w>595</w><h>539</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>830;750;830;80;10;80;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1561</x><y>350</y><w>21</w><h>665</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;930;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>679</x><y>476</y><w>161</w><h>595</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;830;60;830;60;650;210;650;210;10</additional_attributes></element><element><id>Relation</id><coordinates><x>679</x><y>476</y><w>189</w><h>840</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;1180;250;1180;250;10</additional_attributes></element><element><id>Relation</id><coordinates><x>938</x><y>476</y><w>21</w><h>553</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;770;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1862</x><y>329</y><w>210</w><h>105</h></coordinates><panel_attributes>CommandRegistry
+--
+- courses: List&lt;Course&gt;
+- commands: Map&lt;String, Command&gt;
+--
++ CommandRegistry(List&lt;Course&gt;): constructor
++ execute(String, String[]): boolean
+- register(String, Command): void
+- normalize(String): String
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1645</x><y>378</y><w>231</w><h>658</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;920;10;10;310;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>2198</x><y>392</y><w>210</w><h>77</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt;
+Command
+--
+
+--
++ execute(String[] args): void
++ joinArgs(String[] args, int startIndex): String
++ getDefaultCourse(List&lt;Course&gt; courses): Course</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>2065</x><y>413</y><w>147</w><h>21</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;190;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>2702</x><y>252</y><w>147</w><h>63</h></coordinates><panel_attributes>ListCoursesCommand
+--
+
+--
++ execute(String[] args): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2702</x><y>448</y><w>147</w><h>63</h></coordinates><panel_attributes>AddCourseCommand
+--
+
+--
++ execute(String[] args): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2527</x><y>301</y><w>147</w><h>63</h></coordinates><panel_attributes>AddAssessmentCommand
+--
+
+--
++ execute(String[] args): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2527</x><y>399</y><w>147</w><h>63</h></coordinates><panel_attributes>DeadlineCommand
+--
+
+--
++ execute(String[] args): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2527</x><y>497</y><w>147</w><h>63</h></coordinates><panel_attributes>HelpCommand
+--
+
+--
++ execute(String[] args): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2527</x><y>595</y><w>147</w><h>63</h></coordinates><panel_attributes>CreateCourseCommand
+--
+
+--
++ execute(String[] args): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2702</x><y>553</y><w>147</w><h>63</h></coordinates><panel_attributes>QuitCommand
+--
+
+--
++ execute(String[] args): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2702</x><y>350</y><w>147</w><h>63</h></coordinates><panel_attributes>WeekCommand
+--
+
+--
++ execute(String[] args): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2527</x><y>203</y><w>147</w><h>63</h></coordinates><panel_attributes>AskQuestionCommand
+--
+
+--
++ execute(String[] args): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>2345</x><y>231</y><w>196</w><h>175</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;230;10;10;260;10</additional_attributes></element><element><id>Relation</id><coordinates><x>2373</x><y>322</y><w>168</w><h>84</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;100;10;10;220;10</additional_attributes></element><element><id>Relation</id><coordinates><x>2401</x><y>420</y><w>140</w><h>21</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;180;10</additional_attributes></element><element><id>Relation</id><coordinates><x>2373</x><y>462</y><w>168</w><h>77</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;90;220;90</additional_attributes></element><element><id>Relation</id><coordinates><x>2345</x><y>462</y><w>196</w><h>175</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;230;260;230</additional_attributes></element><element><id>Relation</id><coordinates><x>2394</x><y>273</y><w>322</w><h>133</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;170;10;10;440;10</additional_attributes></element><element><id>Relation</id><coordinates><x>2394</x><y>462</y><w>322</w><h>133</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;170;440;170</additional_attributes></element><element><id>Relation</id><coordinates><x>2401</x><y>371</y><w>315</w><h>49</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;50;130;50;130;10;430;10</additional_attributes></element><element><id>Relation</id><coordinates><x>2401</x><y>441</y><w>315</w><h>49</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;130;10;130;50;430;50</additional_attributes></element><element><id>Relation</id><coordinates><x>1729</x><y>714</y><w>140</w><h>322</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>180;10;10;10;10;440</additional_attributes></element><element><id>Relation</id><coordinates><x>966</x><y>1204</y><w>1449</w><h>658</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;920;10;540;2050;540;2050;10</additional_attributes></element><element><id>Relation</id><coordinates><x>987</x><y>1218</y><w>616</w><h>644</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;900;10;420;860;420;860;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1526</x><y>1218</y><w>119</w><h>490</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;680;150;680;150;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1197</x><y>462</y><w>315</w><h>1204</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>430;1700;430;410;10;410;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>973</x><y>476</y><w>511</w><h>1190</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>710;1680;710;450;10;450;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1729</x><y>1218</y><w>343</w><h>1197</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>230;1690;470;1690;470;750;10;750;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1029</x><y>1204</y><w>1358</w><h>357</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;80;10;490;1920;490;1920;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1582</x><y>287</y><w>294</w><h>84</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>400;100;100;100;100;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1183</x><y>1106</y><w>364</w><h>21</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;500;10</additional_attributes></element><element><id>Relation</id><coordinates><x>63</x><y>91</y><w>2520</w><h>1316</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>1270;1680;1270;1860;10;1860;10;10;3580;10;3580;160</additional_attributes></element><element><id>Relation</id><coordinates><x>35</x><y>63</y><w>2569</w><h>1365</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>2190;1660;2190;1930;10;1930;10;10;3650;10;3650;200</additional_attributes></element><element><id>Relation</id><coordinates><x>21</x><y>28</y><w>2597</w><h>1652</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>1900;2340;1200;2340;1200;2020;10;2020;10;10;3690;10;3690;250</additional_attributes></element><element><id>Relation</id><coordinates><x>0</x><y>0</y><w>2744</w><h>1484</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>1340;1810;1340;2100;10;2100;10;10;3900;10;3900;370</additional_attributes></element><element><id>Relation</id><coordinates><x>63</x><y>91</y><w>2632</w><h>1316</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>1270;1680;1270;1860;10;1860;10;10;3740;10;3740;280;3620;280;3620;300</additional_attributes></element><element><id>Relation</id><coordinates><x>35</x><y>63</y><w>2660</w><h>1365</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>2190;1660;2190;1930;10;1930;10;10;3780;10;3780;110</additional_attributes></element><element><id>Relation</id><coordinates><x>21</x><y>28</y><w>2674</w><h>1652</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>1900;2340;1200;2340;1200;2020;10;2020;10;10;3800;10;3800;370</additional_attributes></element><element><id>Relation</id><coordinates><x>35</x><y>63</y><w>2660</w><h>1365</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>2190;1660;2190;1930;10;1930;10;10;3780;10;3780;460;3680;460;3680;480</additional_attributes></element><element><id>Relation</id><coordinates><x>21</x><y>28</y><w>2758</w><h>1652</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>1900;2340;1200;2340;1200;2020;10;2020;10;10;3800;10;3800;430;3920;430;3920;460</additional_attributes></element><element><id>Relation</id><coordinates><x>0</x><y>0</y><w>2905</w><h>1484</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>1340;1810;1340;2100;10;2100;10;10;4130;10;4130;680;4070;680</additional_attributes></element><element><id>Relation</id><coordinates><x>0</x><y>0</y><w>2905</w><h>1484</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>1340;1810;1340;2100;10;2100;10;10;4130;10;4130;910;3820;910</additional_attributes></element></diagram>
