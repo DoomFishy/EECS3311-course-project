@@ -5,12 +5,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -90,13 +88,12 @@ public class AppFacade {
 
     public List<Assessment> getThisWeekAssessments() {
         LocalDate today = LocalDate.now();
-        LocalDate startOfWeek = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-        LocalDate endOfWeek = startOfWeek.plusDays(6);
+        LocalDate endOfWindow = today.plusDays(6);
 
         return getUpcomingAssessments().stream()
                 .filter(a -> {
                     LocalDate dueDate = a.getDeadline().toLocalDate();
-                    return (!dueDate.isBefore(startOfWeek)) && (!dueDate.isAfter(endOfWeek));
+                    return (!dueDate.isBefore(today)) && (!dueDate.isAfter(endOfWindow));
                 })
                 .toList();
     }
@@ -171,13 +168,13 @@ public class AppFacade {
 
     public String generateDeadlineSummary() {
         StringBuilder sb = new StringBuilder();
-        List<Assessment> thisWeek = getAssessments();
+        List<Assessment> thisWeek = getThisWeekAssessments();
 
         if (thisWeek.isEmpty()) {
-            return "No upcoming assessments for this week.";
+            return "No upcoming assessments in the next 7 days.";
         }
 
-        sb.append("This week's deadlines:\n");
+        sb.append("Upcoming deadlines (next 7 days):\n");
         for (Assessment assessment : thisWeek) {
             sb.append("- ").append(assessment.getName())
               .append(" (")
@@ -194,10 +191,10 @@ public class AppFacade {
 
     public String generateTaskList() {
         StringBuilder sb = new StringBuilder();
-        sb.append("This week's tasks:\n");
+        sb.append("Upcoming tasks (next 7 days):\n");
         List<Assessment> thisWeek = getThisWeekAssessments();
         if (thisWeek.isEmpty()) {
-            sb.append("- No tasks scheduled for this week.");
+            sb.append("- No tasks scheduled in the next 7 days.");
             return sb.toString();
         }
 

@@ -39,12 +39,8 @@ public class App {
     }
 
     private static void launchGui() {
-        Course course = new Course("cs101", "StudyBuddy Intro");
-        if (courses.isEmpty()) {
-            courses.add(course);
-        }
 
-        AppFacade appFacade = new AppFacade(AIFactory.createDefault(), course);
+        AppFacade appFacade = new AppFacade(AIFactory.createDefault(), null);
         javax.swing.SwingUtilities.invokeLater(() -> new MainMenuGUI(appFacade));
     }
 
