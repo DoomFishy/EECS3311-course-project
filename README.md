@@ -1,5 +1,7 @@
 # StudyBuddy
 
+DISCLAIMER! This Project was developed with Co-pilot which developed most of the project with my editing coming in later
+
 StudyBuddy is a Java desktop application for course planning, assessment tracking, and AI-assisted learning. It supports a Swing GUI and a terminal CLI, and can use either a local Ollama-based model or a cloud OpenRouter model.
 
 ## Prerequisites
