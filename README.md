@@ -66,7 +66,7 @@ A replace placeholder key in launch.json
 From the project root:
 
 ```bash
-mvn exec:java -Dexec.args="--gui"
+java -cp target\classes App --gui
 ```
 
 This launches the Swing-based course dashboard.
@@ -76,22 +76,14 @@ This launches the Swing-based course dashboard.
 Start the interactive CLI:
 
 ```bash
-mvn exec:java -Dexec.args="--cli"
+java -cp target\classes App --cli
 ```
 
 Show the help text:
 
 ```bash
-mvn exec:java -Dexec.args="--help"
+java -cp target\classes App --help
 ```
-
-### Build a runnable jar
-
-```bash
-mvn clean package
-```
-
-Then run the app via Maven or the jar as needed. Note that the project is set up to run from `App`, so the recommended workflow is to use `mvn exec:java` for development.
 
 ## CLI Commands
 
@@ -109,47 +101,6 @@ Once the interactive CLI starts:
 > quit
 ```
 
-You can also pass commands directly:
-
-```bash
-mvn exec:java -Dexec.args="--cli help"
-mvn exec:java -Dexec.args="--cli list"
-mvn exec:java -Dexec.args="--cli week"
-mvn exec:java -Dexec.args="--cli deadlines"
-```
-
-## Example Usage
-
-### Create a course
-
-```bash
-mvn exec:java -Dexec.args="--cli course \"EECS 3311\""
-```
-
-### Add an assessment
-
-```bash
-mvn exec:java -Dexec.args="--cli add-assessment \"Midterm\" \"03/15\" \"25\" \"EXAM\""
-```
-
-### Ask a question
-
-```bash
-mvn exec:java -Dexec.args="--cli ask \"What are the most important topics for my next exam?\""
-```
-
-### View this week's tasks
-
-```bash
-mvn exec:java -Dexec.args="--cli week"
-```
-
-### View deadlines
-
-```bash
-mvn exec:java -Dexec.args="--cli deadlines"
-```
-
 ## GUI Workflow
 
 In the GUI:
@@ -162,24 +113,3 @@ In the GUI:
 - Generate notes, reports, quizzes, and study plans
 - Toggle local/cloud mode from the AI mode button in the top-right of the dashboard
 
-## Project Structure
-
-Key project files:
-
-- [src/main/java/App.java](src/main/java/App.java) — app entry point
-- [src/main/java/MainMenuGUI.java](src/main/java/MainMenuGUI.java) — GUI
-- [src/main/java/ai/controller/AppFacade.java](src/main/java/ai/controller/AppFacade.java) — central application logic
-- [src/main/java/cli/CommandRegistry.java](src/main/java/cli/CommandRegistry.java) — CLI command routing
-- [src/main/java/course/Course.java](src/main/java/course/Course.java) — course model
-- [pom.xml](pom.xml) — Maven configuration
-
-## Troubleshooting
-
-- If the app fails to start, confirm Java 21 is installed and `mvn -v` works.
-- If AI mode is local but Ollama is not running, switch to cloud mode or start Ollama.
-- If an API call fails, verify the `OPENROUTER_API_KEY` environment variable is set correctly.
-- If a PDF cannot be read, ensure the file exists and is a valid PDF.
-
-## Notes
-
-This project is intended for local course planning and small AI-assisted workflows. The AI integrations are designed to be configuration-based and can run in either local or cloud mode depending on the environment.
