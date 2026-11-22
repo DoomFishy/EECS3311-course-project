@@ -37,6 +37,9 @@ public class AssessmentCommand implements Command {
             case "-complete":
                 handleComplete(subArgs);
                 break;
+            case "-list":
+                handleList();
+                break;
             default:
                 System.out.println("Unknown flag: " + flag);
                 printUsage();
@@ -109,6 +112,26 @@ public class AssessmentCommand implements Command {
         }
 
         System.out.println("Assessment not found: \"" + name + "\"");
+    }
+
+    private void handleList() {
+        List<Assessment> assessments = session.getFacade().getAssessments();
+        
+        if (assessments.isEmpty()) {
+            System.out.println("No assessments found for " + session.getCurrentCourse().getName() + ".");
+            return;
+        }
+
+        System.out.println("Assessments for " + session.getCurrentCourse().getName() + ":");
+        for (Assessment a : assessments) {
+            // Format: - Final Exam | Due: 2023-12-15 | Weight: 30% | Type: EXAM
+            System.out.printf(" - %-20s | Due: %-10s | Weight: %.0f%% | Type: %s\n", 
+                a.getName(), 
+                a.getDeadline().toLocalDate().toString(), 
+                a.getWeight() * 100, 
+                a.getType()
+            );
+        }
     }
 
     private void printUsage() {
