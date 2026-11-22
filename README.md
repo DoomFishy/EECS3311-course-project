@@ -106,14 +106,10 @@ Once the interactive CLI starts (`> `), the application uses unified commands gr
 ### Course Commands (After entering a course)
 
 ```text
-> help
-> week                           Show this week's tasks
-> deadlines                      Show upcoming deadlines
-
 Assessment Tools:
 > assessment -add <name> <date> <weight> <type>    Add an assessment
 > assessment -complete <name> <score>              Grade an assessment
-> list-assessments                                 List all assessments
+> assessment -list                                 List all assessments
 
 Material Tools:
 > material -list                                   List uploaded materials
@@ -133,6 +129,9 @@ AI Agent Tools:
 > agent -quiz                                      Generate a practice quiz
 
 General:
+> help
+> week                                             Show this week's tasks
+> deadlines                                        Show upcoming deadlines
 > back                                             Return to the main menu
 > quit
 ```
