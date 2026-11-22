@@ -22,6 +22,19 @@ public class App {
             return;
         }
 
+        for (int i = 0; i < args.length; i++) {
+            if ("-LLMAPI".equals(args[i]) && i + 1 < args.length) {
+                System.setProperty("OPENROUTER_API_KEY", args[i + 1]);
+            }
+        }
+
+        // 2. Check for standalone agent commands
+        if (args[0].startsWith("-")) {
+            if (runStandaloneAgent(args)) {
+                return; // Exit after running the agent
+            }
+        }
+
         String first = args[0].toLowerCase(Locale.ROOT);
         if ("--help".equals(first) || "-h".equals(first) || "help".equals(first)) {
             printUsage();
@@ -38,11 +51,13 @@ public class App {
             return;
         }
 
+        
+
         runCli(args);
     }
 
-    private static void launchGui() {
 
+    private static void launchGui() {
         AppFacade appFacade = new AppFacade(AIFactory.createDefault(), null);
         javax.swing.SwingUtilities.invokeLater(() -> new MainMenuGUI(appFacade));
     }
@@ -62,48 +77,48 @@ public class App {
         }
     }
 
-private static void interactiveCli() {
-    System.out.println("StudyBuddy CLI");
-    System.out.println("Type 'help' for commands or 'quit' to exit.");
+    private static void interactiveCli() {
+        System.out.println("StudyBuddy CLI");
+        System.out.println("Type 'help' for commands or 'quit' to exit.");
 
-    Scanner scanner = new Scanner(System.in);
-    Session session = new Session();
-    
-    // ★ Start with the Menu registry
-    CommandRegistry registry = new MenuCommandRegistry(courses, session);
+        Scanner scanner = new Scanner(System.in);
+        Session session = new Session();
+        
+        // ★ Start with the Menu registry
+        CommandRegistry registry = new MenuCommandRegistry(courses, session);
 
-    while (true) {
-        System.out.print("> ");
-        if (!scanner.hasNextLine()) {
-            break;
-        }
-
-        String line = scanner.nextLine().trim();
-        if (line.isEmpty()) {
-            continue;
-        }
-
-        String[] parts = line.split("\\s+");
-        String command = parts[0].toLowerCase(Locale.ROOT);
-        String[] commandArgs = parts.length > 1 ? java.util.Arrays.copyOfRange(parts, 1, parts.length) : new String[0];
-
-        if ("quit".equals(command) || "exit".equals(command)) {
-            if (registry instanceof MenuCommandRegistry) {
-                System.out.println("Goodbye.");
+        while (true) {
+            System.out.print("> ");
+            if (!scanner.hasNextLine()) {
                 break;
             }
-        }
 
-        if (!registry.execute(command, commandArgs)) {
-            System.out.println("Unknown command. Type 'help' for usage.");
-        }
+            String line = scanner.nextLine().trim();
+            if (line.isEmpty()) {
+                continue;
+            }
 
-        CommandRegistry next = registry.getNextRegistry();
-        if (next != null) {
-            registry = next;
+            String[] parts = line.split("\\s+");
+            String command = parts[0].toLowerCase(Locale.ROOT);
+            String[] commandArgs = parts.length > 1 ? java.util.Arrays.copyOfRange(parts, 1, parts.length) : new String[0];
+
+            if ("quit".equals(command) || "exit".equals(command)) {
+                if (registry instanceof MenuCommandRegistry) {
+                    System.out.println("Goodbye.");
+                    break;
+                }
+            }
+
+            if (!registry.execute(command, commandArgs)) {
+                System.out.println("Unknown command. Type 'help' for usage.");
+            }
+
+            CommandRegistry next = registry.getNextRegistry();
+            if (next != null) {
+                registry = next;
+            }
         }
     }
-}
 
     private static void printUsage() {
         System.out.println("StudyBuddy CLI Usage:");
@@ -120,4 +135,75 @@ private static void interactiveCli() {
         System.out.println("Interactive CLI commands:");
         System.out.println("  help, list, week, deadlines, add-course <name>, add-assessment <name> <MM/DD> <weight> <type>, ask <question>, quit");
     }
+
+private static boolean runStandaloneAgent(String[] args) {
+    String command = args[0].toLowerCase();
+    String inputFile = null;
+
+    // Find the -input filepath
+    for (int i = 0; i < args.length; i++) {
+        if ("-input".equals(args[i]) && i + 1 < args.length) {
+            inputFile = args[i + 1];
+        }
+    }
+
+    // If it's not one of our agent commands, return false so main() handles it
+    if (!command.equals("-ask") && !command.equals("-notes") && 
+        !command.equals("-plan") && !command.equals("-quiz") && !command.equals("-report")) {
+        return false; 
+    }
+
+    if (inputFile == null) {
+        System.err.println("Error: Missing -input <filepath> for command " + command);
+        System.exit(1);
+    }
+
+    try {
+        // Read the file
+        String fileContent = java.nio.file.Files.readString(java.nio.file.Path.of(inputFile)).trim();
+        
+        // Setup temp course and facade
+        course.Course tempCourse = new course.Course("temp", "Standalone");
+        ai.controller.AppFacade facade = new ai.controller.AppFacade(ai.factory.AIFactory.createDefault(), tempCourse);
+        
+        String response = "";
+
+        System.out.println("Running " + command + "...\n");
+
+        // Route to the correct agent method based on the flag
+        switch (command) {
+            case "-ask":
+                if (fileContent.isEmpty()) {
+                    System.err.println("Error: File is empty. -ask requires a question in the file.");
+                    System.exit(1);
+                }
+                response = facade.askQuestion(fileContent);
+                break;
+            case "-notes":
+                response = facade.generateNotes();
+                break;
+            case "-plan":
+                response = facade.generateStudyPlan();
+                break;
+            case "-quiz":
+                response = facade.generateQuiz();
+                break;
+            case "-report":
+                response = facade.generateCourseReport();
+                break;
+        }
+
+        System.out.println("--- AI RESPONSE ---");
+        System.out.println(response);
+        System.out.println("-------------------");
+        
+        System.exit(0); // Success
+        
+    } catch (Exception e) {
+        System.err.println("Agent execution failed: " + e.getMessage());
+        System.exit(1);
+    }
+    
+    return true;
+}
 }

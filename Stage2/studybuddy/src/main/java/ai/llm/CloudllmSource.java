@@ -17,9 +17,14 @@ public class CloudllmSource implements llmSource {
             throw new IllegalArgumentException("Error - CloudllmSource: context required");
         }
 
-        String apiKey = System.getenv("OPENROUTER_API_KEY");
+        
+        String apiKey = System.getProperty("OPENROUTER_API_KEY");
         if (apiKey == null || apiKey.isBlank()) {
-            throw new IllegalStateException("OPENROUTER_API_KEY is not set. Add it to your environment or .env file.");
+            apiKey = System.getenv("OPENROUTER_API_KEY");
+        }
+        
+        if (apiKey == null || apiKey.isBlank()) {
+            throw new IllegalStateException("OPENROUTER_API_KEY is not set. Add it to your environment, launch.json, or pass it via -LLMAPI.");
         }
 
         String model = System.getenv().getOrDefault("OPENROUTER_MODEL", DEFAULT_MODEL);
