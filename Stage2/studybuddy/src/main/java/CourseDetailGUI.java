@@ -287,12 +287,9 @@ public class CourseDetailGUI extends JFrame {
             if (scoreText == null || scoreText.isBlank()) return;
 
             try {
-                float score = Float.parseFloat(scoreText.trim());
-                target.setScore(score);
-                target.setCompleted(true);
-                appFacade.getCourse().setGradeReport(appFacade.getGradeGoal());
+                appFacade.setGradeAssessment(target, scoreText);
                 refreshViews();
-                outputArea.setText("Updated " + target.getName() + " score to " + score + "/100");
+                outputArea.setText("Updated " + target.getName() + " score to " + scoreText + "/100");
             } catch (NumberFormatException ex) {
                 outputArea.setText("Please enter a valid score between 0 and 100.");
             }

@@ -268,6 +268,13 @@ public class AppFacade {
         return course.getGradeReport() == null ? 0f : course.getGradeReport().getCourseGoal();
     }
 
+    public void setGradeAssessment(Assessment a, String scoreText) {
+        float score = Float.parseFloat(scoreText.trim());
+        a.setScore(score);
+        a.setCompleted(true);
+        getCourse().setGradeReport(getGradeGoal());
+    }
+
     public String getCurrentGradeSummary() {
         double average = getAssessments().stream().mapToDouble(Assessment::getGrade).average().orElse(0.0);
         return String.format(Locale.US, "Current average: %.2f%% | Grade goal: %.2f%%", average, getGradeGoal());

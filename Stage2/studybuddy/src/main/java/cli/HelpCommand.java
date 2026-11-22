@@ -1,20 +1,58 @@
 package cli;
 
 public class HelpCommand implements Command {
+    private final Session session;
+
+    public HelpCommand(Session session) {
+        this.session = session;
+    }
+
     @Override
     public void execute(String[] args) {
-        System.out.println("StudyBuddy CLI Usage:");
-        System.out.println("  java App --cli             Start interactive CLI");
-        System.out.println("  java App --gui             Start the Swing GUI");
-        System.out.println("  java App --week            Show this week's tasks for the default course");
-        System.out.println("  java App --deadlines       Show this week's deadlines for the default course");
-        System.out.println("  java App --ask \"question\" Ask the AI about the default course");
-        System.out.println("  java App --add-assessment \"Name\" \"MM/DD\" \"25\" \"ASSIGNMENT\"");
-        System.out.println("  java App --course \"Course Name\" Create a course");
-        System.out.println("  java App --list            List available courses");
-        System.out.println("  java App --help            Show this help");
-        System.out.println();
         System.out.println("Interactive CLI commands:");
-        System.out.println("  help, list, week, deadlines, add-course <name>, add-assessment <name> <MM/DD> <weight> <type>, ask <question>, quit");
+        if (!session.hasCourse()) {
+            // ── MENU COMMANDS ──
+            System.out.println("-------------------------------------------");
+            System.out.println("  course -list                   List all courses");
+            System.out.println("  course -create <name>          Create a new course");
+            System.out.println("  course -delete <name>          Delete a course");
+            System.out.println("  course -enter <name>           Enter a course to access its tools");
+            System.out.println("-------------------------------------------");
+        
+        } else {
+            // ── COURSE COMMANDS ──
+            System.out.println("Current Course: " + session.getCurrentCourse().getName());
+            System.out.println("-------------------------------------------");
+            System.out.println("  Assessment Tools:");
+            System.out.println("    assessment -add <name> <date> <weight> <type>  Add an assessment");
+            System.out.println("    assessment -complete <name> <score>            Grade an assessment");
+            System.out.println("    list-assessments                               List all assessments");
+            System.out.println();
+            System.out.println("  Material Tools:");
+            System.out.println("    material -list                                 List uploaded materials");
+            System.out.println("    material -upload <filepath>                    Upload a new file");
+            System.out.println("    material -set <id> ...                         Select materials for AI");
+            System.out.println("    material -set -d <id> ...                      Deselect materials");
+            System.out.println();
+            System.out.println("  AI Agent Tools:");
+            System.out.println("    agent -ask <question>                          Ask the AI a question");
+            System.out.println("    agent -report                                  Generate a course report");
+            System.out.println("    agent -plan                                    Generate a study plan");
+            System.out.println("    agent -notes                                   Generate study notes");
+            System.out.println("    agent -quiz                                    Generate a practice quiz");
+            System.out.println();
+            System.out.println("  General:");
+            System.out.println("    week                                           Show this week's tasks");
+            System.out.println("    deadlines                                      Show upcoming deadlines");
+            System.out.println("    grade -set <percentage>                        Set a target grade goal");
+            System.out.println("    grade -view                                    View your current grade");
+            System.out.println("    back                                           Return to the main menu");
+            System.out.println("-------------------------------------------");
+        }
+
+        System.out.println("  help                        Show this help menu");
+        System.out.println("  quit / exit                 Leave the app");
+        System.out.println("-------------------------------------------");
+        System.out.println();
     }
 }

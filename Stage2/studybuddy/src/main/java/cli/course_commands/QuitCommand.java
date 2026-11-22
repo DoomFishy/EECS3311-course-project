@@ -1,4 +1,6 @@
-package cli;
+package cli.course_commands;
+
+import cli.Command;
 
 public class QuitCommand implements Command {
     @Override

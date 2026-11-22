@@ -6,12 +6,15 @@ import java.util.Scanner;
 import ai.controller.AppFacade;
 import ai.factory.AIFactory;
 import cli.CommandRegistry;
+import cli.MenuCommandRegistry;
+import cli.Session;
 import course.Course;
 
 
 
 public class App {
     private static final List<Course> courses = new ArrayList<>();
+     private static Session session = new Session();
 
     public static void main(String[] args) {
         if (args == null || args.length == 0) {
@@ -50,7 +53,7 @@ public class App {
             return;
         }
 
-        CommandRegistry registry = new CommandRegistry(courses);
+        CommandRegistry registry = new MenuCommandRegistry(courses, session);
         String commandName = args[0];
         String[] commandArgs = args.length > 1 ? java.util.Arrays.copyOfRange(args, 1, args.length) : new String[0];
 
@@ -59,38 +62,48 @@ public class App {
         }
     }
 
-    private static void interactiveCli() {
-        System.out.println("StudyBuddy CLI");
-        System.out.println("Type 'help' for commands or 'quit' to exit.");
+private static void interactiveCli() {
+    System.out.println("StudyBuddy CLI");
+    System.out.println("Type 'help' for commands or 'quit' to exit.");
 
-        Scanner scanner = new Scanner(System.in);
-        CommandRegistry registry = new CommandRegistry(courses);
+    Scanner scanner = new Scanner(System.in);
+    Session session = new Session();
+    
+    // ★ Start with the Menu registry
+    CommandRegistry registry = new MenuCommandRegistry(courses, session);
 
-        while (true) {
-            System.out.print("> ");
-            if (!scanner.hasNextLine()) {
-                break;
-            }
+    while (true) {
+        System.out.print("> ");
+        if (!scanner.hasNextLine()) {
+            break;
+        }
 
-            String line = scanner.nextLine().trim();
-            if (line.isEmpty()) {
-                continue;
-            }
+        String line = scanner.nextLine().trim();
+        if (line.isEmpty()) {
+            continue;
+        }
 
-            String[] parts = line.split("\\s+");
-            String command = parts[0].toLowerCase(Locale.ROOT);
-            String[] commandArgs = parts.length > 1 ? java.util.Arrays.copyOfRange(parts, 1, parts.length) : new String[0];
+        String[] parts = line.split("\\s+");
+        String command = parts[0].toLowerCase(Locale.ROOT);
+        String[] commandArgs = parts.length > 1 ? java.util.Arrays.copyOfRange(parts, 1, parts.length) : new String[0];
 
-            if ("quit".equals(command) || "exit".equals(command)) {
+        if ("quit".equals(command) || "exit".equals(command)) {
+            if (registry instanceof MenuCommandRegistry) {
                 System.out.println("Goodbye.");
                 break;
             }
+        }
 
-            if (!registry.execute(command, commandArgs)) {
-                System.out.println("Unknown command. Type 'help' for usage.");
-            }
+        if (!registry.execute(command, commandArgs)) {
+            System.out.println("Unknown command. Type 'help' for usage.");
+        }
+
+        CommandRegistry next = registry.getNextRegistry();
+        if (next != null) {
+            registry = next;
         }
     }
+}
 
     private static void printUsage() {
         System.out.println("StudyBuddy CLI Usage:");

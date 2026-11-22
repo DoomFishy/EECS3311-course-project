@@ -22,11 +22,6 @@ public interface Command {
     }
 
     default Course getDefaultCourse(List<Course> courses) {
-        if (courses == null || courses.isEmpty()) {
-            Course defaultCourse = new Course("cs101", "StudyBuddy Intro");
-            courses.add(defaultCourse);
-            return defaultCourse;
-        }
-        return courses.get(0);
+        return courses.isEmpty() ? null : courses.get(0);
     }
 }

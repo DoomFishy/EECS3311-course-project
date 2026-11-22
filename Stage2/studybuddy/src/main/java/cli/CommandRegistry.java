@@ -7,24 +7,19 @@ import java.util.Map;
 
 import course.Course;
 
-public class CommandRegistry {
-    private final List<Course> courses;
+public abstract class CommandRegistry {
+    protected final List<Course> courses;
+    protected final Session session;
     private final Map<String, Command> commands = new HashMap<>();
-
-    public CommandRegistry(List<Course> courses) {
+    private CommandRegistry nextRegistry = null;
+    
+    protected CommandRegistry(List<Course> courses, Session session) {
         this.courses = courses;
-        register("help", new HelpCommand());
-        register("h", new HelpCommand());
-        register("list", new ListCoursesCommand(courses));
-        register("week", new WeekCommand(courses));
-        register("deadlines", new DeadlineCommand(courses));
-        register("course", new CreateCourseCommand(courses));
-        register("add-course", new AddCourseCommand(courses));
-        register("add-assessment", new AddAssessmentCommand(courses));
-        register("ask", new AskQuestionCommand(courses));
-        register("quit", new QuitCommand());
-        register("exit", new QuitCommand());
+        this.session = session;
+        registerCommands();
     }
+
+    protected abstract void registerCommands();
 
     public boolean execute(String rawCommandName, String[] args) {
         String commandName = normalize(rawCommandName);
@@ -36,7 +31,7 @@ public class CommandRegistry {
         return true;
     }
 
-    private void register(String name, Command command) {
+    protected final void register(String name, Command command) {
         commands.put(normalize(name), command);
     }
 
@@ -45,5 +40,15 @@ public class CommandRegistry {
             return "";
         }
         return value.trim().toLowerCase(Locale.ROOT).replaceFirst("^--+", "");
+    }
+
+    public void switchTo(CommandRegistry registry) {
+        this.nextRegistry = registry;
+    }
+
+    public CommandRegistry getNextRegistry() {
+        CommandRegistry next = this.nextRegistry;
+        this.nextRegistry = null; // consume it so we don't switch again next loop
+        return next;
     }
 }
