@@ -101,8 +101,11 @@ Once the interactive CLI starts (`> `), the application uses unified commands gr
 > course -delete <name>          Delete an existing course
 > course -enter <name>           Enter a course to access its tools
 > quit
+```
 
 ### Course Commands (After entering a course)
+
+```text
 > help
 > week                           Show this week's tasks
 > deadlines                      Show upcoming deadlines
@@ -132,6 +135,7 @@ AI Agent Tools:
 General:
 > back                                             Return to the main menu
 > quit
+```
 
 ## GUI Workflow
 
