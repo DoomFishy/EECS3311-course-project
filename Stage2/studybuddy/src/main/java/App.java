@@ -17,6 +17,7 @@ public class App {
      private static Session session = new Session();
 
     public static void main(String[] args) {
+        loadEnvFile();
         if (args == null || args.length == 0) {
             launchGui();
             return;
@@ -56,6 +57,49 @@ public class App {
         runCli(args);
     }
 
+    private static void loadEnvFile() {
+        try {
+            // Check these locations in order
+            java.nio.file.Path[] pathsToCheck = {
+                java.nio.file.Path.of(".env"),                  // Current working directory
+                java.nio.file.Path.of("app.env"),               // Current working directory (fallback)
+                java.nio.file.Path.of("../.env"),               // One folder up
+                java.nio.file.Path.of("../app.env")             // One folder up (fallback)
+            };
+
+            boolean loaded = false;
+            for (java.nio.file.Path envPath : pathsToCheck) {
+                if (java.nio.file.Files.exists(envPath)) {
+                    for (String line : java.nio.file.Files.readAllLines(envPath)) {
+                        line = line.trim();
+                        if (line.isEmpty() || line.startsWith("#")) continue;
+                        
+                        String[] parts = line.split("=", 2);
+                        if (parts.length == 2) {
+                            String key = parts[0].trim();
+                            String value = parts[1].trim();
+                            if (value.startsWith("\"") && value.endsWith("\"")) {
+                                value = value.substring(1, value.length() - 1);
+                            }
+                            System.setProperty(key, value);
+                        }
+                    }
+                    System.out.println("DEBUG: Successfully loaded " + envPath.toAbsolutePath());
+                    loaded = true;
+                    break;
+                }
+            }
+
+            if (!loaded) {
+                System.out.println("DEBUG: Could not find .env file. Checked:");
+                for (java.nio.file.Path p : pathsToCheck) {
+                    System.out.println("  - " + p.toAbsolutePath());
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Failed to load .env: " + e.getMessage());
+        }
+    }
 
     private static void launchGui() {
         AppFacade appFacade = new AppFacade(AIFactory.createDefault(), null);
