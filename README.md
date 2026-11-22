@@ -85,7 +85,6 @@ Running -ask...
 
 --- AI RESPONSE ---
 TCP is connection-oriented and reliable, ensuring packets arrive in order. UDP is connectionless and faster...
--------------------
 
 (Note: For -notes, -plan, -quiz, and -report, the contents of the -input file are ignored, but the file must still exist to satisfy the CLI structure.)
 
