@@ -90,9 +90,11 @@ TCP is connection-oriented and reliable, ensuring packets arrive in order. UDP i
 
 ## Interactive CLI Commands
 
-Once the interactive CLI starts (> ), the application uses unified commands grouped by flags. Type help at any time to see this menu.
+Once the interactive CLI starts (`> `), the application uses unified commands grouped by flags. Type `help` at any time to see this menu.
 
 ### Menu Commands (Before entering a course)
+
+```text
 > help
 > course -list                   List all courses
 > course -create <name>          Create a new course
