@@ -26,7 +26,7 @@ public class HelpCommand implements Command {
             System.out.println("  Assessment Tools:");
             System.out.println("    assessment -add <name> <date> <weight> <type>  Add an assessment");
             System.out.println("    assessment -complete <name> <score>            Grade an assessment");
-            System.out.println("    list-assessments                               List all assessments");
+            System.out.println("    assessment -list                               List all assessments");
             System.out.println();
             System.out.println("  Material Tools:");
             System.out.println("    material -list                                 List uploaded materials");
@@ -43,7 +43,7 @@ public class HelpCommand implements Command {
             System.out.println();
             System.out.println("  General:");
             System.out.println("    week                                           Show this week's tasks");
-            System.out.println("    deadlines                                      Show upcoming deadlines");
+            System.out.println("    deadline                                       Show upcoming deadlines");
             System.out.println("    grade -set <percentage>                        Set a target grade goal");
             System.out.println("    grade -view                                    View your current grade");
             System.out.println("    back                                           Return to the main menu");
